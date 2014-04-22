@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class DataStore {
 	private DataStore toSelf = new DataStore();
-	private ArrayList<Contact> contactList = new ArrayList<Contact>();
+	private ArrayList<Contact> contacts = new ArrayList<Contact>();
 
 	private DataStore() {
 
@@ -15,11 +15,19 @@ public class DataStore {
 	}
 
 	public ArrayList<Contact> getContactList() {
-		return contactList;
+		return contacts;
 	}
 
 	public void setContactList(ArrayList<Contact> contactList) {
-		this.contactList = contactList;
+		this.contacts = contactList;
+	}
+	
+	public void loadData(){
+		loadContacts();
+	}
+	
+	public void loadContacts(){
+		
 	}
 
 }
