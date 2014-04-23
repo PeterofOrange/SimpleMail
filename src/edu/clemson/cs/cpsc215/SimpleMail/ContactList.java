@@ -20,7 +20,6 @@ public class ContactList {
 			f_in = new FileInputStream("contacts.data");
 
 			// Read object using ObjectInputStream
-			@SuppressWarnings("resource")
 			ObjectInputStream obj_in = new ObjectInputStream(f_in);
 
 			// Read an object
@@ -32,6 +31,7 @@ public class ContactList {
 
 				//Load list of people from file if such file exists
 			}
+			f_in.close();
 		} catch (FileNotFoundException e) {
 		} catch (IOException e1) {
 		} catch (ClassNotFoundException e2) {
