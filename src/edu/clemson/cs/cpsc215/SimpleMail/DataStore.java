@@ -7,7 +7,7 @@ public class DataStore {
 	private ArrayList<Contact> contacts = new ArrayList<Contact>();
 
 	private DataStore() {
-
+		
 	}
 
 	public DataStore getDataStore() {
