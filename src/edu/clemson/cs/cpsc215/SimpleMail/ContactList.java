@@ -9,6 +9,8 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 public class ContactList {
+	//most of this I wrote in DataStore now, I'm not sure to what extent this class is needed, I won't delete
+	//things from it now though
 
 	private ArrayList<Contact> plist;
 	
