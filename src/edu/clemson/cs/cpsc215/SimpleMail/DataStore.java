@@ -9,8 +9,14 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-//extends AbstractTableModel?
-public class DataStore {
+import javax.swing.table.AbstractTableModel;
+
+//?
+public class DataStore extends AbstractTableModel{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5177090278890104086L;
 	private static DataStore toSelf = new DataStore();
 	private ArrayList<Contact> contacts = new ArrayList<Contact>();
 	private Configuration config = new Configuration();
@@ -122,4 +128,33 @@ public class DataStore {
 		}
 	}
 
+	@Override
+	public int getColumnCount() {
+		return 4;
+	}
+
+	@Override
+	public int getRowCount() {
+		return contacts.size();
+	}
+
+	@Override
+	public Object getValueAt(int arg0, int arg1) {
+		Object ret = null;
+		switch (arg1) {
+		case 0:
+			ret = contacts.get(arg0).getName();
+			break;
+		case 1:
+			ret = contacts.get(arg0).getPost();
+			break;
+		case 2:
+			ret = contacts.get(arg0).getPhone();
+			break;
+		case 3:
+			ret = contacts.get(arg0).getEmail();
+			break;
+		}
+		return ret;
+	}
 }
