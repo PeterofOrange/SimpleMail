@@ -1,15 +1,15 @@
 package edu.clemson.cs.cpsc215.SimpleMail;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
 
-public class DataStore implements Serializable {
-	private static final long serialVersionUID = -3397949010748837896L;
+public class DataStore {
 	private static DataStore toSelf = new DataStore();
 	private ArrayList<Contact> contacts = new ArrayList<Contact>();
 	private Configuration config = new Configuration();
@@ -45,32 +45,80 @@ public class DataStore implements Serializable {
 	
 	public void loadData() {
 		loadContacts();
-		loadConfiguration();
+		loadConfig();
+	}
+	
+	public void loadConfig() {
+		ObjectInputStream in = null;
+		File f = new File("data/configuration.dat");
+		
+		try {
+			in = new ObjectInputStream(new FileInputStream(f));
+			config = (Configuration) in.readObject();
+			in.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("Error in loading configuration.");
+		} catch (IOException e) {
+			System.out.println("Error in loading configuration.");
+		} catch (ClassNotFoundException e) {
+			System.out.println("Error in loading configuration.");
+		}
 	}
 	
 	public void loadContacts() {
+		ObjectInputStream in = null;
+		File f = new File("data/contacts/");
+		File [] contactFiles = f.listFiles();
 		
-	}
-	
-	public void loadConfiguration() {
-		
-	}
-
-	
-	public static void serialize(Object obj, String filename) throws IOException {
-		FileOutputStream fileOut = new FileOutputStream(filename);
-		ObjectOutputStream objOut = new ObjectOutputStream(fileOut);
-		objOut.writeObject(obj);
-		fileOut.close();
+		for (int i = 0; i < contactFiles.length; i++) {
+			try {
+				in = new ObjectInputStream(new FileInputStream(contactFiles[i]));
+				Contact con = (Contact) in.readObject();
+				contacts.add(con);
+				in.close();
+			}
+			catch (FileNotFoundException e) {
+				System.out.println("Could not load contact.");
+			}
+			catch (IOException e) {
+				System.out.println("Could not load contact.");
+			}
+			catch (ClassNotFoundException e) {
+				System.out.println("Could not load contact.");
+			}
 		}
+	}
 	
-	public static Object deserialize(String filename) throws IOException, ClassNotFoundException {
-		FileInputStream fileIn = new FileInputStream(filename);
-		ObjectInputStream objIn = new ObjectInputStream(fileIn);
-		Object obj = objIn.readObject();
-		objIn.close();
-	return obj;
-}
-
+	public void saveConfig() {
+		ObjectOutputStream out = null;
+		
+		try {
+			 out = new ObjectOutputStream(new FileOutputStream("data/configuration.dat"));
+			 out.writeObject(config);
+			 out.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("Error saving configuration.");
+		} catch (IOException e) {
+			System.out.println("Error saving configuration.");
+		}
+	}
+	
+	public void saveContacts() {
+		ObjectOutputStream out = null;
+		
+		try {
+			for (int i = 0; i < contacts.size(); i++) {
+				out = new ObjectOutputStream(new FileOutputStream("data/contacts/" + contacts.get(i).getEmail() + ".ser"));
+				out.writeObject(contacts.get(i));
+				out.close();
+			}
+		}
+		catch (FileNotFoundException e) {
+			System.out.println("Error in saving contacts.");
+		}
+		catch (IOException e) {
+			System.out.println("Error in saving contacts.");
+		}
+	}
 
 }
