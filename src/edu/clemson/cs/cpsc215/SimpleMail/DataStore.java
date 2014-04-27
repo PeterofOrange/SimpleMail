@@ -3,15 +3,18 @@ package edu.clemson.cs.cpsc215.SimpleMail;
 import java.util.ArrayList;
 
 public class DataStore {
-	private DataStore toSelf = new DataStore();
+	private static DataStore toSelf = new DataStore();
 	private ArrayList<Contact> contacts = new ArrayList<Contact>();
-	private Configuration config;
+	private Configuration config = new Configuration();
 
 	private DataStore() {
 		
 	}
 
-	public DataStore getDataStore() {
+	public static DataStore getDataStore() {
+		if (toSelf == null) {
+			toSelf = new DataStore();
+		}
 		return toSelf;
 	}
 
