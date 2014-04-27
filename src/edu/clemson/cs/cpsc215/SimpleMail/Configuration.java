@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class Configuration implements Serializable {
 
+	//I think we ideally just use datastore here, and let it do all the serialization for everything
 	private static final long serialVersionUID = -3397949010748837896L;
 	private String myMail;
 	private String smtpServ;
