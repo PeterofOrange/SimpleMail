@@ -19,7 +19,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class SystemInformationDlg extends JDialog {
-	 private JLabel builders, title, subtitle, general;
+	 private JLabel builders, title, subtitle, general, version;
 	 private JPanel layer;
 	 
 	public SystemInformationDlg(Frame main) {
@@ -31,9 +31,12 @@ public class SystemInformationDlg extends JDialog {
 		//setupMenu();
 	//	setupForm();
 	}
-	
+	/**
+	 * constructs a SystemInfromationDlg object
+	 */
 	public SystemInformationDlg() {
-		//super(main, "Add or Edit a Contact");
+		this.setModalityType(DEFAULT_MODALITY_TYPE);
+		this.setTitle("About SimpleMail");
 		setLayout(new BorderLayout());
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -41,16 +44,18 @@ public class SystemInformationDlg extends JDialog {
 		//setupForm();
 		layer = new JPanel();
 		title = new JLabel("SimpleMail");
+		version = new JLabel("Version 1.0 April 28, 2014");
 		subtitle = new JLabel("Coders ");
 		builders = new JLabel("Philip schneider, Parker Davis, Peter Schatteman");
 		general = new JLabel("This project is a simple email client programed in java.");
 		title.setFont(new Font("Arial", Font.PLAIN, 22));
 		this.add(title,BorderLayout.PAGE_START);
-		this.add(subtitle,BorderLayout.CENTER);
-		layer.setLayout(new BorderLayout());
+		this.add(version,BorderLayout.CENTER);
 		this.add(layer,BorderLayout.PAGE_END);
-		layer.add(builders,BorderLayout.PAGE_START);
-		layer.add(general,BorderLayout.CENTER);
+		layer.setLayout(new BorderLayout());
+		layer.add(subtitle,BorderLayout.PAGE_START);
+		layer.add(builders,BorderLayout.CENTER);
+		layer.add(general,BorderLayout.PAGE_END);
 		
 		this.pack();
 		this.setVisible(true);

@@ -30,9 +30,12 @@ public class MainFrame extends JFrame {
 	private JMenuItem exit, compose, configure, test, about;
 	private JPanel base, layer;
 	private JButton add, edit, delete, yes, no;
-
+	/**
+	 * constructs a mainframe object
+	 * @param SimpleMail
+	 */
 	public MainFrame(String title) {
-		super(title);
+		super(title);	
 		super.setSize(800, 400);
 
 		table = new JTable(DataStore.getDataStore());
@@ -77,7 +80,7 @@ public class MainFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int loc = table.getSelectedRow();
-				ContactEditingDlg editContact = new ContactEditingDlg(loc);	
+				ContactEditingDlg editContact = new ContactEditingDlg(loc);
 			}
 
 		});
@@ -112,14 +115,16 @@ public class MainFrame extends JFrame {
 					Contact person = (Contact) people.get(table.getSelectedRow());
 				chose = JOptionPane.showConfirmDialog(layer, "Are you sure you want to delete " + person.getName());
 				if(chose == 0) {
-					people.remove(table.getSelectedRow());
-					DataStore.getDataStore().setContactList(people);
-					DataStore.getDataStore().fireTableRowsInserted(0, DataStore.getDataStore().getRowCount());
+				people.remove(table.getSelectedRow());
+				DataStore.getDataStore().setContactList(people);
+				DataStore.getDataStore().fireTableRowsInserted(0, DataStore.getDataStore().getRowCount());
 				}
 				}
 				
 			}
 	});
+	
+	
 
 		system.add(file);
 		system.add(config);
