@@ -7,6 +7,8 @@ package edu.clemson.cs.cpsc215.SimpleMail;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -56,9 +58,19 @@ public class MainFrame extends JFrame {
 		add = new JButton("Add");
 		edit = new JButton("Edit");
 		delete = new JButton("Delete");
-
+		
+		table.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e)
+			{
+				if (e.getClickCount() == 2 && !e.isConsumed()) {
+					e.consume();
+					int loc = table.getSelectedRow();
+					EmailTransmissionDlg newMail = new EmailTransmissionDlg(loc);
+				}
+			}
+		});
+		
 		add.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ContactEditingDlg newContact = new ContactEditingDlg(-1);
@@ -70,7 +82,7 @@ public class MainFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				EmailTransmissionDlg newMail = new EmailTransmissionDlg();
+				EmailTransmissionDlg newMail = new EmailTransmissionDlg(-1);
 			}
 
 		});
