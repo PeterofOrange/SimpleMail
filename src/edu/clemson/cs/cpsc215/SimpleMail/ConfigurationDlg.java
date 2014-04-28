@@ -44,6 +44,7 @@ public class ConfigurationDlg extends JDialog {
 		serverAddrText.setText(DataStore.getDataStore().getConfig().getServerAddr());
 		serverPortText.setText(DataStore.getDataStore().getConfig().getServerPort());
 		
+		this.setModalityType(DEFAULT_MODALITY_TYPE);
 		this.setVisible(true);
 	}
 

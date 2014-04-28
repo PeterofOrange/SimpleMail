@@ -144,13 +144,12 @@ public class ContactEditingDlg extends JDialog {
 		saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (DataStore.getDataStore().getContactList().contains(con)) {
-					System.out.println("We found it at some index.");
 					saveContact(DataStore.getDataStore().getContactList().lastIndexOf(con));
 				}
 				else {
-					DataStore.getDataStore().fireTableRowsInserted(0, DataStore.getDataStore().getRowCount());
 					saveContact(-1);
 				}
+				DataStore.getDataStore().fireTableRowsInserted(0, DataStore.getDataStore().getRowCount());
 				DataStore.getDataStore().saveContacts();
 				dispose();
 
