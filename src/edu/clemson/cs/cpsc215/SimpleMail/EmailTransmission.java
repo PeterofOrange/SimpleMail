@@ -16,7 +16,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMessage.RecipientType;
 
-public class EmailUtils {
+public class EmailTransmission {
 	
 	private ArrayList<String> to = new ArrayList<String>();
 	private ArrayList<String> cc = new ArrayList<String>();
@@ -45,13 +45,13 @@ public class EmailUtils {
 		
 		try {
 			for(int c = 0; c < to.size(); c++) {
-				msg.setRecipient(RecipientType.TO,  new InternetAddress(to.get(c)));
+				msg.addRecipient(RecipientType.TO,  new InternetAddress(to.get(c)));
 			}
 			for(int c = 0; c < cc.size(); c++) {
-				msg.setRecipient(RecipientType.CC, new InternetAddress(cc.get(c)));
+				msg.addRecipient(RecipientType.CC, new InternetAddress(cc.get(c)));
 			}
 			for(int c = 0; c < bcc.size(); c++) {
-				msg.setRecipient(RecipientType.BCC, new InternetAddress(bcc.get(c)));
+				msg.addRecipient(RecipientType.BCC, new InternetAddress(bcc.get(c)));
 			}
 			msg.setSubject(subject);
 			msg.setText(message);
