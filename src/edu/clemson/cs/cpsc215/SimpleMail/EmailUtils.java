@@ -58,10 +58,10 @@ public class EmailUtils {
 			msg.setFrom(new InternetAddress(fromAddr));
 			Transport.send(msg);
 		} catch (AddressException e) {
-			System.out.println("Error: invalid Address.");
+			errorButton("Error: invalid Address.");
 			//e.printStackTrace();
 		} catch (MessagingException e) {
-			System.out.println("Error: could not send message.");
+			errorButton("Error: could not send message.");
 			//e.printStackTrace();
 		}
 		
@@ -111,5 +111,9 @@ public class EmailUtils {
 
 	public void setMessage(String message) {
 		this.message = message;
+	}
+	
+	public void errorButton(String s) {
+		System.out.println(s);
 	}
 }
