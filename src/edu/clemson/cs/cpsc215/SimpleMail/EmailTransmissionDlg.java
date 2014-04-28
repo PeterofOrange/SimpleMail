@@ -46,6 +46,7 @@ public class EmailTransmissionDlg extends JDialog {
 		setupForm();
 		toText.setText(con.getEmail());
 		this.pack();
+		this.setTitle("Send Email");
 		this.setModalityType(DEFAULT_MODALITY_TYPE);
 		this.setVisible(true);
 	}
@@ -72,6 +73,7 @@ public class EmailTransmissionDlg extends JDialog {
 			con = DataStore.getDataStore().getContactList().get(index);
 		}
 		toText.setText(con.getEmail());
+		this.setTitle("Send Email");
 		this.setVisible(true);
 	}
 
@@ -181,12 +183,10 @@ public class EmailTransmissionDlg extends JDialog {
 				letter.addTo(addresses[c]);
 			}
 			else {
-				ErrorDlg.showError("broke");
-				//ErrorDlg invalidEmailError = new ErrorDlg("Invalid Email: " + addresses[c] + ".");
+				ErrorDlg.showError("Invalid Email: " + addresses[c]);
+				return;
 			}
 	}
-
-		
 		
 		addresses = this.ccText.getText().split(delims);
 		for(int c = 0; c < addresses.length; c++)
