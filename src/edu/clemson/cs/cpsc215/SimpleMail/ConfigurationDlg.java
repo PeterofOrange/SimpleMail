@@ -43,10 +43,13 @@ public class ConfigurationDlg extends JDialog {
 		setupForm();
 		this.pack();
 		emailAddrText.setText(DataStore.getDataStore().getConfig().getEmail());
-		emailPasswordText.setText(DataStore.getDataStore().getConfig().getPassword());
-		serverAddrText.setText(DataStore.getDataStore().getConfig().getServerAddr());
-		serverPortText.setText(DataStore.getDataStore().getConfig().getServerPort());
-		
+		emailPasswordText.setText(DataStore.getDataStore().getConfig()
+				.getPassword());
+		serverAddrText.setText(DataStore.getDataStore().getConfig()
+				.getServerAddr());
+		serverPortText.setText(DataStore.getDataStore().getConfig()
+				.getServerPort());
+
 		this.setModalityType(DEFAULT_MODALITY_TYPE);
 		this.setVisible(true);
 	}
@@ -107,7 +110,6 @@ public class ConfigurationDlg extends JDialog {
 		constraints.gridwidth = 1;
 		this.add(cancelButton, constraints);
 
-		
 		cancelButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -117,16 +119,21 @@ public class ConfigurationDlg extends JDialog {
 
 		saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				DataStore.getDataStore().getConfig()
-						.setEmail(emailAddrText.getText());
-				DataStore.getDataStore().getConfig()
-						.setPassword(emailPasswordText.getText());
-				DataStore.getDataStore().getConfig()
-						.setServerAddr(serverAddrText.getText());
-				DataStore.getDataStore().getConfig()
-						.setServerPort(serverPortText.getText());
-				DataStore.getDataStore().saveConfig();
-				dispose();
+				if (!emailAddrText.getText().matches(".*@.*")) {
+					ErrorDlg.showError("Invalid Email: "
+							+ emailAddrText.getText());
+				} else {
+					DataStore.getDataStore().getConfig()
+							.setEmail(emailAddrText.getText());
+					DataStore.getDataStore().getConfig()
+							.setPassword(emailPasswordText.getText());
+					DataStore.getDataStore().getConfig()
+							.setServerAddr(serverAddrText.getText());
+					DataStore.getDataStore().getConfig()
+							.setServerPort(serverPortText.getText());
+					DataStore.getDataStore().saveConfig();
+					dispose();
+				}
 
 			}
 		});

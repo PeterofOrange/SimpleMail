@@ -18,38 +18,37 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 public class ContactEditingDlg extends JDialog {
-	
-    /**
+
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 772183832819353099L;
 	private GridBagConstraints constraints;
-    private JLabel nameLabel, postLabel, phoneLabel, emailLabel;
-    private JTextField nameText, postText, phoneText, emailText;
+	private JLabel nameLabel, postLabel, phoneLabel, emailLabel;
+	private JTextField nameText, postText, phoneText, emailText;
 	private JButton saveButton, cancelButton;
 	private Contact con;
-    
-	
+
 	public ContactEditingDlg(Frame main, Contact con) {
-			super(main, "Add or Edit a Contact");
-			setLayout(new GridBagLayout());
-			constraints = new GridBagConstraints();
-			constraints.anchor = GridBagConstraints.WEST;
-			constraints.insets = new Insets(5, 5, 5, 5);
-			setLocationRelativeTo(null);
-			setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-			setupMenu();
-			setupForm();
-			nameText.setText(con.getName());
-			postText.setText(con.getPost());
-			phoneText.setText(con.getPhone());
-			emailText.setText(con.getEmail());
-			this.pack();
-			this.setVisible(true);
-		}
-	
+		super(main, "Add or Edit a Contact");
+		setLayout(new GridBagLayout());
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.WEST;
+		constraints.insets = new Insets(5, 5, 5, 5);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setupMenu();
+		setupForm();
+		nameText.setText(con.getName());
+		postText.setText(con.getPost());
+		phoneText.setText(con.getPhone());
+		emailText.setText(con.getEmail());
+		this.pack();
+		this.setVisible(true);
+	}
+
 	public ContactEditingDlg(int contactIndex) {
-		//super(main, "Add or Edit a Contact");
+		// super(main, "Add or Edit a Contact");
 		setLayout(new GridBagLayout());
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.WEST;
@@ -72,12 +71,12 @@ public class ContactEditingDlg extends JDialog {
 
 		this.setVisible(true);
 	}
-	
-		private void setupMenu() {
+
+	private void setupMenu() {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	private void setupForm() {
 		nameLabel = new JLabel("Name: ");
 		constraints.gridx = 0;
@@ -87,8 +86,7 @@ public class ContactEditingDlg extends JDialog {
 		constraints.gridx = 1;
 		constraints.fill = GridBagConstraints.HORIZONTAL;
 		this.add(nameText, constraints);
-		
-		
+
 		postLabel = new JLabel("Postal Address: ");
 		constraints.gridx = 0;
 		constraints.gridy = 1;
@@ -97,8 +95,7 @@ public class ContactEditingDlg extends JDialog {
 		constraints.gridx = 1;
 		constraints.fill = GridBagConstraints.HORIZONTAL;
 		this.add(postText, constraints);
-		
-		
+
 		phoneLabel = new JLabel("Phone Number: ");
 		constraints.gridx = 0;
 		constraints.gridy = 2;
@@ -107,7 +104,7 @@ public class ContactEditingDlg extends JDialog {
 		constraints.gridx = 1;
 		constraints.fill = GridBagConstraints.HORIZONTAL;
 		this.add(phoneText, constraints);
-		
+
 		emailLabel = new JLabel("Email Address: ");
 		constraints.gridx = 0;
 		constraints.gridy = 3;
@@ -116,7 +113,7 @@ public class ContactEditingDlg extends JDialog {
 		constraints.gridx = 1;
 		constraints.fill = GridBagConstraints.HORIZONTAL;
 		this.add(emailText, constraints);
-		
+
 		saveButton = new JButton("Save");
 		saveButton.setFont(new Font("Arial", Font.BOLD, 16));
 		constraints.gridx = 1;
@@ -132,50 +129,57 @@ public class ContactEditingDlg extends JDialog {
 		constraints.gridheight = 2;
 		constraints.gridwidth = 1;
 		this.add(cancelButton, constraints);
-		
-		
+
 		cancelButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-			}});
-			
-		
+			}
+		});
+
 		saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (DataStore.getDataStore().getContactList().contains(con)) {
-					saveContact(DataStore.getDataStore().getContactList().lastIndexOf(con));
-				}
-				else {
+					saveContact(DataStore.getDataStore().getContactList()
+							.lastIndexOf(con));
+				} else {
 					saveContact(-1);
 				}
-				DataStore.getDataStore().fireTableRowsInserted(0, DataStore.getDataStore().getRowCount());
+				DataStore.getDataStore().fireTableRowsInserted(0,
+						DataStore.getDataStore().getRowCount());
 				DataStore.getDataStore().saveContacts();
-				dispose();
 
-			}});
+			}
+		});
 	}
 
 	/**
-	 * Saves a contact. This saves a new contact or overwrites old contact information.
+	 * Saves a contact. This saves a new contact or overwrites old contact
+	 * information.
 	 * 
-	 * @param index the index of the contact to overwrite. Set this to -1 for a new contact.
+	 * @param index
+	 *            the index of the contact to overwrite. Set this to -1 for a
+	 *            new contact.
 	 */
-		public void saveContact(int index) {
-			String name = nameText.getText();
-			String post  = postText.getText();
-			String phone = phoneText.getText();
-			String email = emailText.getText();
+	public void saveContact(int index) {
+		String name = nameText.getText();
+		String post = postText.getText();
+		String phone = phoneText.getText();
+		String email = emailText.getText();
+		if (!email.matches(".*@.*")) {
+			ErrorDlg.showError("Invalid Email: " + email);
+		} else {
 			Contact add = new Contact(name, post, phone, email);
 			if (index == -1) {
-				DataStore.getDataStore().addContact(add);	
-			}
-			else {
+				DataStore.getDataStore().addContact(add);
+			} else {
 				DataStore.getDataStore().getContactList().set(index, add);
 			}
-
 			DataStore.getDataStore().saveContacts();
+			// TODO: move to exit functions
+
 			dispose();
-				//TODO: date main for table update
+
+		}
 	}
 }

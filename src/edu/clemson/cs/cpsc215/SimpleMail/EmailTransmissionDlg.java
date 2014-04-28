@@ -181,7 +181,8 @@ public class EmailTransmissionDlg extends JDialog {
 				letter.addTo(addresses[c]);
 			}
 			else {
-				ErrorDlg invalidEmailError = new ErrorDlg("Invalid Email: " + addresses[c] + ".");
+				ErrorDlg.showError("broke");
+				//ErrorDlg invalidEmailError = new ErrorDlg("Invalid Email: " + addresses[c] + ".");
 			}
 	}
 
@@ -200,11 +201,11 @@ public class EmailTransmissionDlg extends JDialog {
 
 		try {
 			letter.sendEmail();// (to, cc, bcc, subject, body);
+			JOptionPane.showMessageDialog(this, "Email sent!");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			JOptionPane.showMessageDialog(this, "Email sent!");
 		}
 
 		this.toText.setText("");

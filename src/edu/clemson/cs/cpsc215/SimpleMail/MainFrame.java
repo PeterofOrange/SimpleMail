@@ -5,38 +5,33 @@
 package edu.clemson.cs.cpsc215.SimpleMail;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;//
-import javax.swing.table.JTableHeader;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
-
-
+import javax.swing.JTable;
 
 
 public class MainFrame extends JFrame {
-	private int chose;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private int selected;
 	private JTable table;
-	private JMenuBar menu, system;
+	private JMenuBar system;
 	private JMenu file, config, help;
-	private JMenuItem exit, compose, configure, test, about;
+	private JMenuItem exit, compose, configure, about;
 	private JPanel base, layer;
 	private JButton add, edit, delete;
 	/**
@@ -54,7 +49,6 @@ public class MainFrame extends JFrame {
 		file.add(compose = new JMenuItem("Compose Mail"));
 		config = new JMenu("Configuration");
 		config.add(configure = new JMenuItem("Configure"));
-		config.add(test = new JMenuItem("Test"));
 		help = new JMenu("Help");
 		help.add(about = new JMenuItem("About"));
 		base = new JPanel();
@@ -83,7 +77,6 @@ public class MainFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				ContactEditingDlg newContact = new ContactEditingDlg(-1);
 			}
-
 		});
 
 		compose.addActionListener(new ActionListener() {
@@ -92,7 +85,6 @@ public class MainFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				EmailTransmissionDlg newMail = new EmailTransmissionDlg(-1);
 			}
-
 		});
 
 		edit.addActionListener(new ActionListener() {
@@ -136,18 +128,17 @@ public class MainFrame extends JFrame {
 	delete.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ArrayList people = new ArrayList();
-				people = DataStore.getDataStore().getContactList();
-				if(people.size() > 0) {
-					Contact person = (Contact) people.get(table.getSelectedRow());
-				chose = JOptionPane.showConfirmDialog(layer, "Are you sure you want to delete " + person.getName() + "?");
-				if(chose == 0) {
-				people.remove(table.getSelectedRow());
-				DataStore.getDataStore().setContactList(people);
-				DataStore.getDataStore().fireTableRowsInserted(0, DataStore.getDataStore().getRowCount());
-				}
-				}
+				ArrayList<Contact> contacts = DataStore.getDataStore().getContactList();
+				Contact contact = new Contact();
+				if (contacts.size() > 0)
+					contact = (Contact) contacts.get(table.getSelectedRow());
 				
+				selected = JOptionPane.showConfirmDialog(layer, "Are you sure you want to delete " + contact.getName() + "?");
+				if(selected == 0) {
+					contacts.remove(table.getSelectedRow());
+					DataStore.getDataStore().setContactList(contacts);
+					DataStore.getDataStore().fireTableRowsInserted(0, DataStore.getDataStore().getRowCount());
+				}
 			}
 	});
 	

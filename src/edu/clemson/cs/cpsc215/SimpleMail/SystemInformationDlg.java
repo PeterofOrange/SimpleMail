@@ -7,19 +7,17 @@ package edu.clemson.cs.cpsc215.SimpleMail;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.Frame;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
 
 public class SystemInformationDlg extends JDialog {
-	 private JLabel builders, title, subtitle, general, version;
+	 /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JLabel builders, title, subtitle, general, version;
 	 private JPanel layer;
 	 
 	public SystemInformationDlg(Frame main) {
