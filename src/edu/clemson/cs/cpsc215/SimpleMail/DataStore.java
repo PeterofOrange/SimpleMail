@@ -8,10 +8,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-
 import javax.swing.table.AbstractTableModel;
 
-//?
 public class DataStore extends AbstractTableModel{
 	/**
 	 * 
@@ -123,6 +121,14 @@ public class DataStore extends AbstractTableModel{
 		catch (IOException e) {
 			System.out.println("Error in saving contacts.");
 		}
+	}
+	
+	public void addContact(Contact con) {
+		contacts.add(con);
+	}
+	
+	public void removeContact(int index) {
+		contacts.remove(index);
 	}
 
 	@Override
