@@ -7,8 +7,10 @@ package edu.clemson.cs.cpsc215.SimpleMail;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.AddressException;
@@ -35,7 +37,8 @@ public class EmailTransmission {
 		Configuration config = DataStore.getDataStore().getConfig();
 		String serv = config.getServerAddr();
 		String fromAddr = config.getEmail();
-		// String passwd = config.getPassword();
+		//String uname = config.getEmail();
+		//String passwd = config.getPassword();
 
 		if (serv == null || serv == "") {
 			errorButton("Cannot send email: No SMTP server set.");
@@ -47,8 +50,12 @@ public class EmailTransmission {
 
 		Properties props = new Properties();
 		props.put("mail.smtp.host", serv);
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.port", config.getServerPort());
+		Authenticator auth = new Authenticator();
 
-		Session ses = Session.getDefaultInstance(props, null);
+		//Session ses = Session.getDefaultInstance(props, null);
+		Session ses = Session.getDefaultInstance(props, auth);
 		Message msg = new MimeMessage(ses);
 
 		try {
@@ -80,7 +87,6 @@ public class EmailTransmission {
 			Transport.send(msg);
 		} catch (AddressException e) {
 			errorButton("Error: invalid Address.");
-			//e.printStackTrace();
 		} catch (MessagingException e) {
 			errorButton("Error: could not send message.");
 			e.printStackTrace();
@@ -200,5 +206,20 @@ public class EmailTransmission {
 	 */
 	public void errorButton(String s) {
 		System.out.println(s);
+	}
+
+
+	private class Authenticator extends javax.mail.Authenticator {
+		private PasswordAuthentication authentication;
+		public Authenticator() {
+			Configuration config = DataStore.getDataStore().getConfig();
+			String username = config.getEmail();
+			String password = config.getPassword();
+
+			authentication = new PasswordAuthentication(username, password);
+		}
+		protected PasswordAuthentication getPasswordAuthentication() {
+			return authentication;
+		}
 	}
 }
