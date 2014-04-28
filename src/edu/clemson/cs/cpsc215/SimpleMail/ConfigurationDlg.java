@@ -5,7 +5,6 @@
 package edu.clemson.cs.cpsc215.SimpleMail;
 
 import java.awt.Font;
-import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -19,6 +18,10 @@ import javax.swing.JTextField;
 
 public class ConfigurationDlg extends JDialog {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private GridBagConstraints constraints;
 	private JLabel emailAddrLabel, emailPasswordLabel, serverAddrLabel,
 			serverPortLabel;

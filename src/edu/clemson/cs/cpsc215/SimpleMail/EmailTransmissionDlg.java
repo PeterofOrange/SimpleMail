@@ -23,6 +23,10 @@ import javax.swing.JTextField;
 
 public class EmailTransmissionDlg extends JDialog {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private GridBagConstraints constraints;
 	private JLabel fromLabel, toLabel, ccLabel, bccLabel, subjLabel, msgLabel;
 	private JTextField fromText, toText, ccText, bccText, subjText;
