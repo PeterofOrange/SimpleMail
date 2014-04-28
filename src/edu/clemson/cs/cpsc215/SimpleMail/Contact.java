@@ -113,5 +113,12 @@ public class Contact implements Serializable {
 		this.name = name;
 		this.email = email;
 	}
+	
+	/**
+	 * Crates a contact
+	 */
+	public Contact() {
+		super();
+	}
 
 }

@@ -7,28 +7,35 @@ package edu.clemson.cs.cpsc215.SimpleMail;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;//
 
+
+
+
 public class MainFrame extends JFrame {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 5579764837969697449L;
+	private int chose;
 	private JTable table;
-	private JMenuBar system;
+	private JMenuBar menu, system;
 	private JMenu file, config, help;
 	private JMenuItem exit, compose, configure, test, about;
 	private JPanel base, layer;
-	private JButton add, edit, delete;
-
+	private JButton add, edit, delete, yes, no;
+	/**
+	 * constructs a mainframe object
+	 * @param SimpleMail
+	 */
 	public MainFrame(String title) {
-		super(title);
+		super(title);	
 		super.setSize(800, 400);
 
 		table = new JTable(DataStore.getDataStore());
@@ -43,7 +50,7 @@ public class MainFrame extends JFrame {
 		help.add(about = new JMenuItem("About"));
 		base = new JPanel();
 		layer = new JPanel();
-
+		setLayout(new BorderLayout());
 		base.setLayout(new BorderLayout());
 		layer.setLayout(new BorderLayout());
 		add = new JButton("Add");
@@ -54,17 +61,7 @@ public class MainFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ContactEditingDlg newContact = new ContactEditingDlg();
-			}
-
-		});
-		delete.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO: delete contact
-				
-				//DataStore.getDataStore().getContactList().remove(index);
+				ContactEditingDlg newContact = new ContactEditingDlg(-1);
 			}
 
 		});
@@ -82,27 +79,8 @@ public class MainFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ContactEditingDlg editContact = new ContactEditingDlg();
-			}
-
-		});
-		
-		
-		configure.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				ConfigurationDlg editConfig = new ConfigurationDlg();
-			}
-
-		});
-		
-		
-		about.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				SystemInformationDlg info = new SystemInformationDlg();
+				int loc = table.getSelectedRow();
+				ContactEditingDlg editContact = new ContactEditingDlg(loc);
 			}
 
 		});
@@ -115,17 +93,48 @@ public class MainFrame extends JFrame {
 			}
 
 		});
+		
+		about.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				SystemInformationDlg info = new SystemInformationDlg();
+			}
+
+		});
+		
+	delete.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ArrayList people = new ArrayList();
+				
+				
+				
+				people = DataStore.getDataStore().getContactList();
+				if(people.size() > 0) {
+					Contact person = (Contact) people.get(table.getSelectedRow());
+				chose = JOptionPane.showConfirmDialog(layer, "Are you sure you want to delete " + person.getName());
+				if(chose == 0) {
+				people.remove(table.getSelectedRow());
+				DataStore.getDataStore().setContactList(people);
+				DataStore.getDataStore().fireTableRowsInserted(0, DataStore.getDataStore().getRowCount());
+				}
+				}
+				
+			}
+	});
+	
+	
 
 		system.add(file);
 		system.add(config);
 		system.add(help);
-
-		base.add(system, BorderLayout.PAGE_START);
-		base.add(table, BorderLayout.CENTER);
+		super.add( new JScrollPane(table),BorderLayout.CENTER);
+		super.add(system, BorderLayout.PAGE_START);
 		layer.add(add, BorderLayout.LINE_START);
 		layer.add(edit, BorderLayout.CENTER);
 		layer.add(delete, BorderLayout.LINE_END);
 		base.add(layer, BorderLayout.PAGE_END);
-		super.add(base);
+		super.add(base,BorderLayout.PAGE_END);
 	}
 }
