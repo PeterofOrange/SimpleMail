@@ -27,6 +27,7 @@ public class ContactEditingDlg extends JDialog {
     private JLabel nameLabel, postLabel, phoneLabel, emailLabel;
     private JTextField nameText, postText, phoneText, emailText;
 	private JButton saveButton, cancelButton;
+	private Contact con;
     
 	
 	public ContactEditingDlg(Frame main, Contact con) {
@@ -47,7 +48,7 @@ public class ContactEditingDlg extends JDialog {
 			this.setVisible(true);
 		}
 	
-	public ContactEditingDlg() {
+	public ContactEditingDlg(int contactIndex) {
 		//super(main, "Add or Edit a Contact");
 		setLayout(new GridBagLayout());
 		constraints = new GridBagConstraints();
@@ -58,6 +59,17 @@ public class ContactEditingDlg extends JDialog {
 		setupMenu();
 		setupForm();
 		this.pack();
+		con = new Contact();
+		if (contactIndex != -1) {
+			con = DataStore.getDataStore().getContactList().get(contactIndex);
+		}
+		if (con != null) {
+			nameText.setText(con.getName());
+			postText.setText(con.getPost());
+			phoneText.setText(con.getPhone());
+			emailText.setText(con.getEmail());
+		}
+
 		this.setVisible(true);
 	}
 	
@@ -131,18 +143,38 @@ public class ContactEditingDlg extends JDialog {
 		
 		saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				DataStore.getDataStore().fireTableRowsInserted(0, DataStore.getDataStore().getRowCount());
-				saveContact();
+				if (DataStore.getDataStore().getContactList().contains(con)) {
+					System.out.println("We found it at some index.");
+					saveContact(DataStore.getDataStore().getContactList().lastIndexOf(con));
+				}
+				else {
+					DataStore.getDataStore().fireTableRowsInserted(0, DataStore.getDataStore().getRowCount());
+					saveContact(-1);
+				}
+				DataStore.getDataStore().saveContacts();
+				dispose();
+
 			}});
 	}
 
-		public void saveContact() {
+	/**
+	 * Saves a contact. This saves a new contact or overwrites old contact information.
+	 * 
+	 * @param index the index of the contact to overwrite. Set this to -1 for a new contact.
+	 */
+		public void saveContact(int index) {
 			String name = nameText.getText();
 			String post  = postText.getText();
 			String phone = phoneText.getText();
 			String email = emailText.getText();
 			Contact add = new Contact(name, post, phone, email);
-			DataStore.getDataStore().addContact(add);
+			if (index == -1) {
+				DataStore.getDataStore().addContact(add);	
+			}
+			else {
+				DataStore.getDataStore().getContactList().set(index, add);
+			}
+
 			DataStore.getDataStore().saveContacts();
 			dispose();
 				//TODO: date main for table update

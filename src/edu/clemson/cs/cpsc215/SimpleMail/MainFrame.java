@@ -58,7 +58,7 @@ public class MainFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ContactEditingDlg newContact = new ContactEditingDlg();
+				ContactEditingDlg newContact = new ContactEditingDlg(-1);
 			}
 
 		});
@@ -76,7 +76,8 @@ public class MainFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ContactEditingDlg editContact = new ContactEditingDlg();
+				int loc = table.getSelectedRow();
+				ContactEditingDlg editContact = new ContactEditingDlg(loc);	
 			}
 
 		});
@@ -111,9 +112,9 @@ public class MainFrame extends JFrame {
 					Contact person = (Contact) people.get(table.getSelectedRow());
 				chose = JOptionPane.showConfirmDialog(layer, "Are you sure you want to delete " + person.getName());
 				if(chose == 0) {
-				people.remove(table.getSelectedRow());
-				DataStore.getDataStore().setContactList(people);
-				DataStore.getDataStore().fireTableRowsInserted(0, DataStore.getDataStore().getRowCount());
+					people.remove(table.getSelectedRow());
+					DataStore.getDataStore().setContactList(people);
+					DataStore.getDataStore().fireTableRowsInserted(0, DataStore.getDataStore().getRowCount());
 				}
 				}
 				
