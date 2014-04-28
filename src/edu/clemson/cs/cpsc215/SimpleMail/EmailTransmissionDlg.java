@@ -68,7 +68,9 @@ public class EmailTransmissionDlg extends JDialog {
 		this.pack();
 		
 		Contact con = new Contact();
-		con = DataStore.getDataStore().getContactList().get(index);
+		if (index != -1) {
+			con = DataStore.getDataStore().getContactList().get(index);
+		}
 		toText.setText(con.getEmail());
 		this.setVisible(true);
 	}
