@@ -1,5 +1,5 @@
 //Parker Davis (parkerd), Peter Schatteman (prschat), Phillip Schneider (pschnei)
-//Last Modified: Apr 27 2014
+//Last Modified: Apr 28 2014
 //Assignment 4: SimpleMail
 //This file contains the EmailUtils class and associated methods
 package edu.clemson.cs.cpsc215.SimpleMail;
@@ -24,11 +24,11 @@ public class EmailTransmission {
 	private String message;
 	private String subject;
 	
-	public void sendEmail() {
+	public void sendEmail() throws Exception{
 
 		Configuration config = DataStore.getDataStore().getConfig();
 		String serv = config.getSmtpServ();
-		String fromAddr = config.getMail();
+		String fromAddr = config.getEmail();
 		
 //		if (serv == null || serv == "") {
 //			("Cannot send email: No SMTP server set.");

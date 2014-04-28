@@ -1,5 +1,5 @@
 //Parker Davis (parkerd), Peter Schatteman (prschat), Phillip Schneider (pschnei)
-//Last Modified: Apr 27 2014
+//Last Modified: Apr 28 2014
 //Assignment 4: SimpleMail
 //This file contains the Configuration class and associated methods
 package edu.clemson.cs.cpsc215.SimpleMail;
@@ -15,18 +15,18 @@ public class Configuration implements Serializable {
 	/**
 	 * Gets the email address for a Configuration
 	 * 
-	 * @return		the mail address associated for this Configuration
+	 * @return		the email address associated for this Configuration
 	 */
-	public String getMail() {
+	public String getEmail() {
 		return myMail;
 	}
 	
 	/**
 	 * Sets the email address for a Configuration
 	 * 
-	 * @param		myMail the mail address to set
+	 * @param		myMail the email address to set
 	 */
-	public void setMail(String myMail) {
+	public void setEmail(String myMail) {
 		this.myMail = myMail;
 	}
 	

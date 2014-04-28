@@ -1,5 +1,5 @@
 //Parker Davis (parkerd), Peter Schatteman (prschat), Phillip Schneider (pschnei)
-//Last Modified: Apr 27 2014
+//Last Modified: Apr 28 2014
 //Assignment 4: SimpleMail
 //This file contains the MainFrame class and associated methods
 package edu.clemson.cs.cpsc215.SimpleMail;
@@ -7,7 +7,6 @@ package edu.clemson.cs.cpsc215.SimpleMail;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -51,7 +50,7 @@ public class MainFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("This is a totally anonymous function");
+				ContactEditingDlg newContact = new ContactEditingDlg();
 			}
 
 		});
@@ -59,7 +58,8 @@ public class MainFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("This is a totally anonymous function");
+				//TODO: delete contact
+			//	DataStore.getDataStore().deleteContact(stuffGoesHere);
 			}
 
 		});
@@ -77,7 +77,7 @@ public class MainFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("This is a totally anonymous function");
+				ContactEditingDlg editContact = new ContactEditingDlg();
 			}
 
 		});

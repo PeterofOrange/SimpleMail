@@ -1,3 +1,7 @@
+//Parker Davis (parkerd), Peter Schatteman (prschat), Phillip Schneider (pschnei)
+//Last Modified: Apr 28 2014
+//Assignment 4: SimpleMail
+//This file contains the ConfigurationTest test class and associated methods
 package edu.clemson.cs.cpsc215.SimpleMail;
 
 import static org.junit.Assert.*;
@@ -18,10 +22,10 @@ public class ConfigurationTest {
 
 	@Test
 	public void testMail() {
-		assertEquals(alpha.getMail(), "prschat@g.clemson.edu");
-		assertEquals(omega3.getMail(), null);
-		omega3.setMail("name@gmail.com");
-		assertEquals("name@gmail.com", omega3.getMail());
+		assertEquals(alpha.getEmail(), "prschat@g.clemson.edu");
+		assertEquals(omega3.getEmail(), null);
+		omega3.setEmail("name@gmail.com");
+		assertEquals("name@gmail.com", omega3.getEmail());
 	}
 
 	@Test

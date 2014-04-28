@@ -1,5 +1,5 @@
 //Parker Davis (parkerd), Peter Schatteman (prschat), Phillip Schneider (pschnei)
-//Last Modified: Apr 27 2014
+//Last Modified: Apr 28 2014
 //Assignment 4: SimpleMail
 //This file contains the EmailTransmissionDlg class and associated methods
 package edu.clemson.cs.cpsc215.SimpleMail;
@@ -51,7 +51,7 @@ public class EmailTransmissionDlg extends JDialog{
 		setLayout(new GridBagLayout());
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.WEST;
-		constraints.insets = new Insets(5, 5, 5, 5);
+		constraints.insets = new Insets(6, 6, 6, 6);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setupMenu();
@@ -66,9 +66,21 @@ public class EmailTransmissionDlg extends JDialog{
 	}
 	
 	private void setupForm() {
-		toLabel = new JLabel("To:");
+		
+		fromLabel = new JLabel("From: ");
 		constraints.gridx = 0;
 		constraints.gridy = 0;
+		this.add(fromLabel, constraints);
+		fromText = new JTextField(30);
+		fromText.setText(DataStore.getDataStore().getConfig().getEmail());
+		fromText.setEditable(false);
+		constraints.gridx = 1;
+		constraints.fill = GridBagConstraints.HORIZONTAL;
+		this.add(fromText, constraints);
+		
+		toLabel = new JLabel("To: ");
+		constraints.gridx = 0;
+		constraints.gridy = 1;
 		this.add(toLabel, constraints);	
 		toText = new JTextField(30);
 		constraints.gridx = 1;
@@ -77,7 +89,7 @@ public class EmailTransmissionDlg extends JDialog{
 		
 		ccLabel = new JLabel("CC: ");
 		constraints.gridx = 0;
-		constraints.gridy = 1;
+		constraints.gridy = 2;
 		this.add(ccLabel, constraints);
 		ccText = new JTextField(30);
 		constraints.gridx = 1;
@@ -86,7 +98,7 @@ public class EmailTransmissionDlg extends JDialog{
 		
 		bccLabel = new JLabel("BCC: ");
 		constraints.gridx = 0;
-		constraints.gridy = 2;
+		constraints.gridy = 3;
 		this.add(bccLabel, constraints);
 		bccText = new JTextField(30);
 		constraints.gridx = 1;
@@ -95,7 +107,7 @@ public class EmailTransmissionDlg extends JDialog{
 		
 		subjLabel = new JLabel("Subject: ");
 		constraints.gridx = 0;
-		constraints.gridy = 3;
+		constraints.gridy = 4;
 		this.add(subjLabel, constraints);
 		subjText = new JTextField(30);
 		constraints.gridx = 1;
@@ -104,7 +116,7 @@ public class EmailTransmissionDlg extends JDialog{
 		
 		msgLabel = new JLabel("Body: ");
 		constraints.gridx = 0;
-		constraints.gridy = 4;
+		constraints.gridy = 5;
 		this.add(msgLabel, constraints);
 		msgText = new JTextArea(10, 30);
 		msgText.setLineWrap(true);
@@ -117,7 +129,7 @@ public class EmailTransmissionDlg extends JDialog{
 		sendButton = new JButton("Send");
 		sendButton.setFont(new Font("Arial", Font.BOLD, 16));
 		constraints.gridx = 1;
-		constraints.gridy = 5;
+		constraints.gridy = 6;
 		constraints.gridheight = 2;
 		constraints.gridwidth = 1;
 		this.add(sendButton, constraints);
@@ -125,7 +137,7 @@ public class EmailTransmissionDlg extends JDialog{
 		cancelButton = new JButton("Cancel");
 		cancelButton.setFont(new Font("Arial", Font.BOLD, 16));
 		constraints.gridx = 0;
-		constraints.gridy = 5;
+		constraints.gridy = 6;
 		constraints.gridheight = 2;
 		constraints.gridwidth = 1;
 		this.add(cancelButton, constraints);
@@ -150,8 +162,12 @@ public class EmailTransmissionDlg extends JDialog{
 				String bcc = this.bccText.getText();
 				String subject = this.subjText.getText();
 				String body = this.msgText.getText();
-				//sendEmail(to, cc, bcc, subject, body);
-				JOptionPane.showMessageDialog(this, "Email successfully sent (I'm not lying)");
+		//		try {
+		//			//sendEmail(to, cc, bcc, subject, body);
+		//		} catch {
+					JOptionPane.showMessageDialog(this, "Email sent!");
+		//		}
+				
 				this.toText.setText("");
 				this.ccText.setText("");
 				this.bccText.setText("");

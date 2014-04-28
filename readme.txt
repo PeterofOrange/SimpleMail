@@ -2,17 +2,16 @@ Assignment 4: Simple Mail
 Group: Parker Davis, Peter Schatteman, Philip Schneider
 
 TODO:
-- I was waiting on some swing stuff, not sure where that is so I'll finish most things I can do today and try to get
-into contact with you guys
-- javadoc comments
-- unit testing
-- everything swing
-- mainframe
+-one more unit test class, a lot of dlgs and some integration and stuff, extra credit
 
-
-features completed:
-	contact/contactlist classes with serialization: Peter
 
 extra credit features completed:
 
 who did what:
+Configuration.java: Peter, Parker
+Datastore.java: Parker, Peter
+Contacts.java: Peter
+MainFrame.java: Phillip, Parker
+EmailTransmission.dlg: Peter, Parker
+EmailTransmissionDlg.dlg: Parker
+Driver.java: Phillip
