@@ -19,9 +19,6 @@ import javax.swing.JTextField;
 
 public class ContactEditingDlg extends JDialog {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 772183832819353099L;
 	private GridBagConstraints constraints;
 	private JLabel nameLabel, postLabel, phoneLabel, emailLabel;
@@ -37,7 +34,6 @@ public class ContactEditingDlg extends JDialog {
 		constraints.insets = new Insets(5, 5, 5, 5);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setupMenu();
 		setupForm();
 		nameText.setText(con.getName());
 		postText.setText(con.getPost());
@@ -49,14 +45,12 @@ public class ContactEditingDlg extends JDialog {
 	}
 
 	public ContactEditingDlg(int contactIndex) {
-		// super(main, "Add or Edit a Contact");
 		setLayout(new GridBagLayout());
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.WEST;
 		constraints.insets = new Insets(5, 5, 5, 5);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setupMenu();
 		setupForm();
 		this.pack();
 		con = new Contact();
@@ -69,16 +63,10 @@ public class ContactEditingDlg extends JDialog {
 			phoneText.setText(con.getPhone());
 			emailText.setText(con.getEmail());
 		}
-		
 		this.setTitle("Add or Edit a Contact");
 		this.setVisible(true);
 	}
-
-	private void setupMenu() {
-		// TODO Auto-generated method stub
-
-	}
-
+	
 	private void setupForm() {
 		nameLabel = new JLabel("Name: ");
 		constraints.gridx = 0;

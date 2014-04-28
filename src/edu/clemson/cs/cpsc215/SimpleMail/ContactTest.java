@@ -5,14 +5,9 @@
 package edu.clemson.cs.cpsc215.SimpleMail;
 
 import static org.junit.Assert.*;
-
 import org.junit.Before;
 import org.junit.Test;
 
-/**
- * @author prschat
- * 
- */
 public class ContactTest {
 	Contact yates;
 	Contact other;

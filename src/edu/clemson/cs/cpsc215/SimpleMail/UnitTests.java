@@ -9,8 +9,6 @@ import org.junit.Test;
 
 public class UnitTests {
 	
-	//unit tests are required for at least: configuration, datastore, contact
-
 	@Test
 	public void test() {
 		fail("Not yet implemented");

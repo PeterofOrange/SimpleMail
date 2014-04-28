@@ -15,17 +15,13 @@ import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
 
 public class DataStore extends AbstractTableModel {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 5177090278890104086L;
 	private static final DataStore toSelf = new DataStore();
 	private ArrayList<Contact> contacts = new ArrayList<Contact>();
 	private Configuration config = new Configuration();
 
 	private DataStore() {
-		File dir = new File("data/contacts/");
-		dir.mkdirs();
 		loadData();
 	}
 
@@ -77,7 +73,7 @@ public class DataStore extends AbstractTableModel {
 	}
 
 	/**
-	 * Loads contacts and cofiguration data from storage
+	 * Loads contacts and configuration data from storage
 	 */
 	public void loadData() {
 		loadContacts();
@@ -85,7 +81,7 @@ public class DataStore extends AbstractTableModel {
 	}
 
 	/**
-	 * Loads cofiguration data from storage
+	 * Loads configuration data from storage
 	 */
 	public void loadConfig() {
 		ObjectInputStream in = null;
@@ -96,12 +92,11 @@ public class DataStore extends AbstractTableModel {
 			config = (Configuration) in.readObject();
 			in.close();
 		} catch (FileNotFoundException e) {
-			System.out.println("Error in loading configuration.");
-			// Should return no error, this just means first load
+			ErrorDlg.showError("Error: configuration file not Found");
 		} catch (IOException e) {
-			System.out.println("Error in loading configuration.");
+			ErrorDlg.showError("Error: could not readconfiguration file");
 		} catch (ClassNotFoundException e) {
-			System.out.println("Error in loading configuration.");
+			ErrorDlg.showError("Error: configuration file contains malformed data");
 		}
 	}
 
@@ -111,13 +106,15 @@ public class DataStore extends AbstractTableModel {
 	public void loadContacts() {
 		ObjectInputStream in = null;
 		File f = new File("data/contacts/");
-		if(!f.exists())
+		if (!f.exists())
 			f.mkdir();
 		File[] contactFiles = f.listFiles();
-		if(contacts == null) contacts = new ArrayList<Contact>();
+		if (contacts == null)
+			contacts = new ArrayList<Contact>();
 
 		int j = 0;
-		if(contactFiles != null) j = contactFiles.length;
+		if (contactFiles != null)
+			j = contactFiles.length;
 		for (int i = 0; i < j; i++) {
 			try {
 				in = new ObjectInputStream(new FileInputStream(contactFiles[i]));
@@ -125,13 +122,12 @@ public class DataStore extends AbstractTableModel {
 				contacts.add(con);
 				in.close();
 			} catch (FileNotFoundException e) {
-				//System.out.println("Could not load contact.");
-				//Again, this only means that the file does not exist:
-				//We should start empty, not throw error.
+				ErrorDlg.showError("Error: Contact file not found");
 			} catch (IOException e) {
-				System.out.println("Could not load contacts.");
+				ErrorDlg.showError("Error: Could not read contact files");
 			} catch (ClassNotFoundException e) {
-				System.out.println("Could not load contacts.");
+				System.out
+						.println("Error: A contact file contains malformed data");
 			}
 		}
 	}
@@ -149,21 +145,18 @@ public class DataStore extends AbstractTableModel {
 	 */
 	public void saveConfig() {
 		ObjectOutputStream out = null;
-
 		try {
-			//File f = new File("data/configuration.ser");
-			/*if (!f.exists())
-				f.createNewFile();*/
 			out = new ObjectOutputStream(new FileOutputStream(
 					"data/configuration.ser"));
 			out.writeObject(config);
 			out.close();
 		} catch (FileNotFoundException e) {
-			System.out.println("Error saving configuration.");
+			ErrorDlg.showError("Error: Could not find configuration file");
 		} catch (IOException e) {
-			System.out.println("Error saving configuration.");
+			ErrorDlg.showError("Error: Could not read configuration file");
 		}
 	}
+
 	/**
 	 * Saves Contacts list for future usage.
 	 */
@@ -171,8 +164,6 @@ public class DataStore extends AbstractTableModel {
 		ObjectOutputStream out = null;
 
 		try {
-			// File dir = new File("data/contacts/");
-			// if(!dir.exists()) dir.mkdir();
 			for (int i = 0; i < contacts.size(); i++) {
 				File f = new File("data/contacts/" + contacts.get(i).getEmail()
 						+ ".ser");
@@ -184,10 +175,9 @@ public class DataStore extends AbstractTableModel {
 				out.close();
 			}
 		} catch (FileNotFoundException e) {
-			System.out.println("Error in saving contacts: No file present.");
+			ErrorDlg.showError("Error: Could not save to contact directory");
 		} catch (IOException e) {
-			System.out.println("Error in saving contacts.");
-			e.printStackTrace();
+			ErrorDlg.showError("Error: Configuration save to contact file");
 		}
 	}
 

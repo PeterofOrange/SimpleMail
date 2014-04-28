@@ -98,9 +98,6 @@ public class Configuration implements Serializable {
 		return serverPort;
 	}
 	
-	
-	
-	//use Configuration() then setMail() instead to save a function or two, maybe, could delete this
 	/**
 	 * Creates a Configuration an email address
 	 * 
@@ -117,5 +114,4 @@ public class Configuration implements Serializable {
 	public Configuration() {
 		super();
 	}
-
 }

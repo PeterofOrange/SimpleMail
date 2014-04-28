@@ -27,7 +27,7 @@ public class ConfigurationTest {
 		omega3.setEmail("name@gmail.com");
 		assertEquals("name@gmail.com", omega3.getEmail());
 	}
-	
+
 	@Test
 	public void testPass() {
 		alpha.setPassword("unobtainium");
@@ -44,7 +44,7 @@ public class ConfigurationTest {
 		omega3.setServerAddr("127.0.0.1");
 		assertEquals("127.0.0.1", omega3.getServerAddr());
 	}
-	
+
 	@Test
 	public void testServPort() {
 		alpha.setServerPort("500");
@@ -53,5 +53,4 @@ public class ConfigurationTest {
 		omega3.setServerPort("173");
 		assertEquals("173", omega3.getServerPort());
 	}
-
 }

@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -21,11 +20,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-
 public class MainFrame extends JFrame {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	private int selected;
 	private JTable table;
@@ -34,14 +30,23 @@ public class MainFrame extends JFrame {
 	private JMenuItem exit, compose, configure, about;
 	private JPanel base, layer;
 	private JButton add, edit, delete;
+
 	/**
 	 * constructs a mainframe object
+	 * 
 	 * @param SimpleMail
 	 */
 	public MainFrame(String title) {
-		super(title);	
+		super(title);
 		super.setSize(800, 400);
-                
+		setupForm();
+		addListeners();
+	}
+
+	/**
+	 * sets up the form for the MainFrame JFrame
+	 */
+	private void setupForm() {
 		table = new JTable(DataStore.getDataStore());
 		file = new JMenu("File");
 		system = new JMenuBar();
@@ -59,89 +64,7 @@ public class MainFrame extends JFrame {
 		add = new JButton("Add");
 		edit = new JButton("Edit");
 		delete = new JButton("Delete");
-		
-		table.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e)
-			{
-				//only consume double-clicks to compose new mail
-				if (e.getClickCount() == 2 && !e.isConsumed()) {
-					e.consume();
-					int loc = table.getSelectedRow();
-					EmailTransmissionDlg newMail = new EmailTransmissionDlg(loc);
-				}
-			}
-		});
-		
-		add.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				ContactEditingDlg newContact = new ContactEditingDlg(-1);
-			}
-		});
 
-		compose.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				EmailTransmissionDlg newMail = new EmailTransmissionDlg(-1);
-			}
-		});
-
-		edit.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int loc = table.getSelectedRow();
-				ContactEditingDlg editContact = new ContactEditingDlg(loc);
-			}
-
-		});
-
-		
-		configure.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				ConfigurationDlg editConfig = new ConfigurationDlg();	
-			}
-
-		});
-		
-		
-		exit.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-			}
-
-		});
-		
-		about.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				SystemInformationDlg info = new SystemInformationDlg();
-			}
-
-		});
-		
-	delete.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				ArrayList<Contact> contacts = DataStore.getDataStore().getContactList();
-				Contact contact = new Contact();
-				if (contacts.size() > 0)
-					contact = (Contact) contacts.get(table.getSelectedRow());
-				
-				selected = JOptionPane.showConfirmDialog(layer, "Are you sure you want to delete " + contact.getName() + "?");
-				if(selected == 0) {
-					contacts.remove(table.getSelectedRow());
-					DataStore.getDataStore().setContactList(contacts);
-					DataStore.getDataStore().fireTableRowsInserted(0, DataStore.getDataStore().getRowCount());
-				}
-			}
-	});
-	
 		system.add(file);
 		system.add(config);
 		system.add(help);
@@ -151,6 +74,87 @@ public class MainFrame extends JFrame {
 		layer.add(edit, BorderLayout.CENTER);
 		layer.add(delete, BorderLayout.LINE_END);
 		base.add(layer, BorderLayout.PAGE_END);
-		super.add(base,BorderLayout.PAGE_END);
+		super.add(base, BorderLayout.PAGE_END);
+	}
+
+	/**
+	 * adds listeners to the MainFram JFrame for related functionality
+	 */
+	private void addListeners() {
+		table.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				// only consume double-clicks to compose new mail
+				if (e.getClickCount() == 2 && !e.isConsumed()) {
+					e.consume();
+					int loc = table.getSelectedRow();
+					EmailTransmissionDlg newMail = new EmailTransmissionDlg(loc);
+				}
+			}
+		});
+
+		add.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ContactEditingDlg newContact = new ContactEditingDlg(-1);
+			}
+		});
+
+		compose.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				EmailTransmissionDlg newMail = new EmailTransmissionDlg(-1);
+			}
+		});
+
+		edit.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int loc = table.getSelectedRow();
+				ContactEditingDlg editContact = new ContactEditingDlg(loc);
+			}
+
+		});
+
+		configure.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ConfigurationDlg editConfig = new ConfigurationDlg();
+			}
+		});
+
+		exit.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+
+		about.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				SystemInformationDlg info = new SystemInformationDlg();
+			}
+		});
+
+		delete.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ArrayList<Contact> contacts = DataStore.getDataStore()
+						.getContactList();
+				Contact contact = new Contact();
+				if (contacts.size() > 0)
+					contact = (Contact) contacts.get(table.getSelectedRow());
+
+				selected = JOptionPane.showConfirmDialog(layer,
+						"Are you sure you want to delete " + contact.getName()
+								+ "?");
+				if (selected == 0) {
+					contacts.remove(table.getSelectedRow());
+					DataStore.getDataStore().setContactList(contacts);
+					DataStore.getDataStore().fireTableRowsInserted(0,
+							DataStore.getDataStore().getRowCount());
+				}
+			}
+		});
 	}
 }
