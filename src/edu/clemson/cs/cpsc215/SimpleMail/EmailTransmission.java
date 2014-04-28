@@ -52,24 +52,24 @@ public class EmailTransmission {
 		Message msg = new MimeMessage(ses);
 
 		try {
-			if (to.size() > 0) {
-				for (int c = 0; c < to.size(); c++) {
+			for (int c = 0; c < to.size(); c++) {
+				if(!to.get(c).equals("")){
 					msg.addRecipient(RecipientType.TO,
 							new InternetAddress(to.get(c)));
-					System.out.println(to.get(c) + '\n'
-							+ new InternetAddress(to.get(c)) + "\nasdf");
+					//System.out.println(cc.get(c));
 				}
 			}
-			if (cc.size() > 1) {
-				for (int c = 0; c < cc.size(); c++) {
-					System.out.println(cc.get(c));
+			//System.out.println(cc.size());
+			for (int c = 0; c < cc.size(); c++) {
+				if(!cc.get(c).equals("")){
+					//System.out.println(cc.get(c));
 					msg.addRecipient(RecipientType.CC,
-							new InternetAddress(cc.get(c)));
+						new InternetAddress(cc.get(c)));
 				}
 			}
-			if (bcc.size() > 1) {
-				for (int c = 0; c < bcc.size(); c++) {
-					System.out.println(bcc.get(c));
+			for (int c = 0; c < bcc.size(); c++) {
+				if(!bcc.get(c).equals("")){
+					//System.out.println(bcc.get(c));
 					msg.addRecipient(RecipientType.BCC,
 							new InternetAddress(bcc.get(c)));
 				}
@@ -80,9 +80,10 @@ public class EmailTransmission {
 			Transport.send(msg);
 		} catch (AddressException e) {
 			errorButton("Error: invalid Address.");
-			e.printStackTrace();
+			//e.printStackTrace();
 		} catch (MessagingException e) {
 			errorButton("Error: could not send message.");
+			e.printStackTrace();
 		}
 
 	}
