@@ -33,13 +33,16 @@ public class EmailTransmission {
 		Configuration config = DataStore.getDataStore().getConfig();
 		String serv = config.getServerAddr();
 		String fromAddr = config.getEmail();
+		//String passwd = config.getPassword();
 		
-//		if (serv == null || serv == "") {
-//			("Cannot send email: No SMTP server set.");
-//		}
-//		else if (fromAddr == null || fromAddr == "") {
-//			("Cannot send email: Email address (from) not set.");
-//		}
+		if (serv == null || serv == "") {
+			errorButton("Cannot send email: No SMTP server set.");
+			return;
+		}
+		else if (fromAddr == null || fromAddr == "") {
+			errorButton("Cannot send email: Email address (from) not set.");
+			return;
+		}
 		
 		Properties props = new Properties();
 		props.put("mail.smtp.host", serv);
@@ -62,11 +65,10 @@ public class EmailTransmission {
 			msg.setFrom(new InternetAddress(fromAddr));
 			Transport.send(msg);
 		} catch (AddressException e) {
+			System.out.println();
 			errorButton("Error: invalid Address.");
-			//e.printStackTrace();
 		} catch (MessagingException e) {
 			errorButton("Error: could not send message.");
-			//e.printStackTrace();
 		}
 		
 	}

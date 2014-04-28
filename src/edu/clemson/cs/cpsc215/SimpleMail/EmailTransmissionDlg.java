@@ -21,33 +21,32 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class EmailTransmissionDlg extends JDialog{
-	
-    private GridBagConstraints constraints;
+public class EmailTransmissionDlg extends JDialog {
+
+	private GridBagConstraints constraints;
 	private JLabel fromLabel, toLabel, ccLabel, bccLabel, subjLabel, msgLabel;
 	private JTextField fromText, toText, ccText, bccText, subjText;
 	private JTextArea msgText;
 	private JScrollPane msgScroll;
 	private JButton sendButton, cancelButton;
-    
-	
+
 	public EmailTransmissionDlg(Frame main, Contact con) {
-			super(main, "Send Email");
-			setLayout(new GridBagLayout());
-			constraints = new GridBagConstraints();
-			constraints.anchor = GridBagConstraints.WEST;
-			constraints.insets = new Insets(5, 5, 5, 5);
-			setLocationRelativeTo(null);
-			setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-			setupMenu();
-			setupForm();
-			toText.setText(con.getEmail());
-			this.pack();
-			this.setVisible(true);
-		}
-	
+		super(main, "Send Email");
+		setLayout(new GridBagLayout());
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.WEST;
+		constraints.insets = new Insets(5, 5, 5, 5);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setupMenu();
+		setupForm();
+		toText.setText(con.getEmail());
+		this.pack();
+		this.setVisible(true);
+	}
+
 	public EmailTransmissionDlg() {
-		//super(main, "Send Email");
+		// super(main, "Send Email");
 		setLayout(new GridBagLayout());
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.WEST;
@@ -59,14 +58,14 @@ public class EmailTransmissionDlg extends JDialog{
 		this.pack();
 		this.setVisible(true);
 	}
-		
-		private void setupMenu() {
+
+	private void setupMenu() {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	private void setupForm() {
-		
+
 		fromLabel = new JLabel("From: ");
 		constraints.gridx = 0;
 		constraints.gridy = 0;
@@ -77,16 +76,16 @@ public class EmailTransmissionDlg extends JDialog{
 		constraints.gridx = 1;
 		constraints.fill = GridBagConstraints.HORIZONTAL;
 		this.add(fromText, constraints);
-		
+
 		toLabel = new JLabel("To: ");
 		constraints.gridx = 0;
 		constraints.gridy = 1;
-		this.add(toLabel, constraints);	
+		this.add(toLabel, constraints);
 		toText = new JTextField(30);
 		constraints.gridx = 1;
 		constraints.fill = GridBagConstraints.HORIZONTAL;
 		this.add(toText, constraints);
-		
+
 		ccLabel = new JLabel("CC: ");
 		constraints.gridx = 0;
 		constraints.gridy = 2;
@@ -95,7 +94,7 @@ public class EmailTransmissionDlg extends JDialog{
 		constraints.gridx = 1;
 		constraints.fill = GridBagConstraints.HORIZONTAL;
 		this.add(ccText, constraints);
-		
+
 		bccLabel = new JLabel("BCC: ");
 		constraints.gridx = 0;
 		constraints.gridy = 3;
@@ -104,7 +103,7 @@ public class EmailTransmissionDlg extends JDialog{
 		constraints.gridx = 1;
 		constraints.fill = GridBagConstraints.HORIZONTAL;
 		this.add(bccText, constraints);
-		
+
 		subjLabel = new JLabel("Subject: ");
 		constraints.gridx = 0;
 		constraints.gridy = 4;
@@ -112,8 +111,8 @@ public class EmailTransmissionDlg extends JDialog{
 		subjText = new JTextField(30);
 		constraints.gridx = 1;
 		constraints.fill = GridBagConstraints.HORIZONTAL;
-		this.add(subjText, constraints);		
-		
+		this.add(subjText, constraints);
+
 		msgLabel = new JLabel("Body: ");
 		constraints.gridx = 0;
 		constraints.gridy = 5;
@@ -123,9 +122,8 @@ public class EmailTransmissionDlg extends JDialog{
 		msgScroll = new JScrollPane(msgText);
 		constraints.gridx = 1;
 		constraints.fill = GridBagConstraints.HORIZONTAL;
-		this.add(msgScroll, constraints);		
-		
-		
+		this.add(msgScroll, constraints);
+
 		sendButton = new JButton("Send");
 		sendButton.setFont(new Font("Arial", Font.BOLD, 16));
 		constraints.gridx = 1;
@@ -141,37 +139,53 @@ public class EmailTransmissionDlg extends JDialog{
 		constraints.gridheight = 2;
 		constraints.gridwidth = 1;
 		this.add(cancelButton, constraints);
-		
-		
+
 		cancelButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-			}});
-			
-		
+			}
+		});
+
 		sendButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				sendAction();
-			}});
+			}
+		});
 	}
 
-		public void sendAction() {
-				String to = ccText.getText();
-				String cc = this.ccText.getText();
-				String bcc = this.bccText.getText();
-				String subject = this.subjText.getText();
-				String body = this.msgText.getText();
-		//		try {
-		//			//sendEmail(to, cc, bcc, subject, body);
-		//		} catch {
-					JOptionPane.showMessageDialog(this, "Email sent!");
-		//		}
-				
-				this.toText.setText("");
-				this.ccText.setText("");
-				this.bccText.setText("");
-				this.subjText.setText("");
-				this.msgText.setText("");	
+	public void sendAction() {
+		EmailTransmission letter = new EmailTransmission();
+		String delims = "[, ]+";
+
+		String[] addresses = toText.getText().split(delims);
+		for(int c = 0; c < addresses.length; c++)
+			letter.addTo(addresses[c]);
+		
+		addresses = this.ccText.getText().split(delims);
+		for(int c = 0; c < addresses.length; c++)
+			letter.addCc(addresses[c]);
+		
+		addresses = this.bccText.getText().split(delims);
+		for(int c = 0; c < addresses.length; c++)
+			letter.addBcc(addresses[c]);
+
+		letter.setSubject(this.subjText.getText());
+		letter.setMessage(this.msgText.getText());
+
+		try {
+			letter.sendEmail();// (to, cc, bcc, subject, body);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JOptionPane.showMessageDialog(this, "Email sent!");
+		}
+
+		this.toText.setText("");
+		this.ccText.setText("");
+		this.bccText.setText("");
+		this.subjText.setText("");
+		this.msgText.setText("");
 	}
 }
