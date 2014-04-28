@@ -26,24 +26,9 @@ public class ConfigurationDlg extends JDialog {
 			serverPortText;
 	private JButton saveButton, cancelButton;
 
-	public ConfigurationDlg(Frame main, Contact con) {
-		super(main, "Add or Edit a Contact");
-		setLayout(new GridBagLayout());
-		constraints = new GridBagConstraints();
-		constraints.anchor = GridBagConstraints.WEST;
-		constraints.insets = new Insets(5, 5, 5, 5);
-		setLocationRelativeTo(null);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setupMenu();
-		setupForm();
-		emailAddrText.setText(con.getName());
-		emailPasswordText.setText(con.getPost());
-		serverAddrText.setText(con.getPhone());
-		serverPortText.setText(con.getEmail());
-		this.pack();
-		this.setVisible(true);
-	}
-
+	/**
+	 * Constructs a new ConfigurationDlg
+	 */
 	public ConfigurationDlg() {
 		// super(main, "Add or Edit a Contact");
 		setLayout(new GridBagLayout());
@@ -52,17 +37,19 @@ public class ConfigurationDlg extends JDialog {
 		constraints.insets = new Insets(5, 5, 5, 5);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setupMenu();
 		setupForm();
 		this.pack();
+		emailAddrText.setText(DataStore.getDataStore().getConfig().getEmail());
+		emailPasswordText.setText(DataStore.getDataStore().getConfig().getPassword());
+		serverAddrText.setText(DataStore.getDataStore().getConfig().getServerAddr());
+		serverPortText.setText(DataStore.getDataStore().getConfig().getServerPort());
+		
 		this.setVisible(true);
 	}
 
-	private void setupMenu() {
-		// TODO Auto-generated method stub
-
-	}
-
+	/**
+	 * Sets up the form for a ConfigurationDlg
+	 */
 	private void setupForm() {
 		emailAddrLabel = new JLabel("Email address: ");
 		constraints.gridx = 0;
@@ -116,6 +103,7 @@ public class ConfigurationDlg extends JDialog {
 		constraints.gridwidth = 1;
 		this.add(cancelButton, constraints);
 
+		
 		cancelButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -134,21 +122,9 @@ public class ConfigurationDlg extends JDialog {
 				DataStore.getDataStore().getConfig()
 						.setServerPort(serverPortText.getText());
 				DataStore.getDataStore().saveConfig();
+				dispose();
 
 			}
 		});
-	}
-
-	public void saveContact() {
-		String name = emailAddrText.getText();
-		String post = emailPasswordText.getText();
-		String phone = serverAddrText.getText();
-		String email = serverPortText.getText();
-		Contact add = new Contact(name, post, phone, email);
-		DataStore.getDataStore().addContact(add);
-
-		DataStore.getDataStore().saveConfig();
-		dispose();
-		// TODO: date main for table update
 	}
 }
