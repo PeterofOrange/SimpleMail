@@ -86,6 +86,16 @@ public class MainFrame extends JFrame {
 			}
 
 		});
+		
+		
+		configure.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ConfigurationDlg editConfig = new ConfigurationDlg();
+			}
+
+		});
 
 		exit.addActionListener(new ActionListener() {
 
