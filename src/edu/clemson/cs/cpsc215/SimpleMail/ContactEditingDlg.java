@@ -131,6 +131,7 @@ public class ContactEditingDlg extends JDialog {
 		
 		saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				DataStore.getDataStore().fireTableRowsInserted(0, DataStore.getDataStore().getRowCount());
 				saveContact();
 			}});
 	}
