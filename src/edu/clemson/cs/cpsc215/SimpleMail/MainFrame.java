@@ -62,6 +62,7 @@ public class MainFrame extends JFrame {
 		table.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e)
 			{
+				//System.out.println("got mouse click:" + e.getClickCount());
 				if (e.getClickCount() == 2 && !e.isConsumed()) {
 					e.consume();
 					int loc = table.getSelectedRow();
