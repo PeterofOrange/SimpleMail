@@ -90,7 +90,7 @@ public class DataStore extends AbstractTableModel {
 	 */
 	public void loadConfig() {
 		ObjectInputStream in = null;
-		File f = new File("data/configuration.dat");
+		File f = new File("data/configuration.ser");
 
 		try {
 			in = new ObjectInputStream(new FileInputStream(f));
@@ -152,7 +152,7 @@ public class DataStore extends AbstractTableModel {
 		ObjectOutputStream out = null;
 
 		try {
-			File f = new File("/data/configuration.dat");
+			File f = new File("/data/configuration.ser");
 			if (!f.exists())
 				f.createNewFile();
 			out = new ObjectOutputStream(new FileOutputStream(

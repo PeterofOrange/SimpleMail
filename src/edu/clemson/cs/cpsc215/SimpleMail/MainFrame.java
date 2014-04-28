@@ -97,6 +97,7 @@ public class MainFrame extends JFrame {
 
 		});
 		
+		
 		about.addActionListener(new ActionListener() {
 
 			@Override

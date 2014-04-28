@@ -23,7 +23,11 @@ public class EmailTransmission {
 	private ArrayList<String> bcc = new ArrayList<String>();
 	private String message;
 	private String subject;
-	
+	/**
+	 * sends an email using the associated EmailTransmission object
+	 * 
+	 * @throws Exception 	If the email sending encounters a fatal error
+	 */
 	public void sendEmail() throws Exception {
 
 		Configuration config = DataStore.getDataStore().getConfig();
@@ -67,6 +71,11 @@ public class EmailTransmission {
 		
 	}
 
+	/**
+	 * gets the To address
+	 * 
+	 * @return
+	 */
 	public ArrayList<String> getTo() {
 		return to;
 	}
