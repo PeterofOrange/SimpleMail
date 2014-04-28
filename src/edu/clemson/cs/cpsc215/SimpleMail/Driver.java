@@ -4,8 +4,6 @@
 //This file contains the Driver class and associated methods
 package edu.clemson.cs.cpsc215.SimpleMail;
 
-import java.util.ArrayList;
-
 public class Driver {
 
 	public static void main(String [] args) {
