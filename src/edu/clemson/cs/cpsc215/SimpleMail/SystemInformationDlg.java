@@ -13,6 +13,11 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 public class SystemInformationDlg extends JDialog {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4638979669399989356L;
+
 	public SystemInformationDlg(Frame main) {
 		super(main, "System Information / About");
 		setLayout(new GridBagLayout());

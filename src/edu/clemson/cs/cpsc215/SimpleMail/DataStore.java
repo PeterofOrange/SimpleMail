@@ -24,6 +24,10 @@ public class DataStore extends AbstractTableModel {
 	private Configuration config = new Configuration();
 
 	private DataStore() {
+		File dir = new File("data/contacts/");
+		boolean x = dir.mkdirs();
+
+		loadData();
 	}
 
 	/**
@@ -93,7 +97,8 @@ public class DataStore extends AbstractTableModel {
 			config = (Configuration) in.readObject();
 			in.close();
 		} catch (FileNotFoundException e) {
-			System.out.println("Error in loading configuration.");
+			// System.out.println("Error in loading configuration.");
+			// Should return no error, this just means first load
 		} catch (IOException e) {
 			System.out.println("Error in loading configuration.");
 		} catch (ClassNotFoundException e) {
@@ -107,41 +112,49 @@ public class DataStore extends AbstractTableModel {
 	public void loadContacts() {
 		ObjectInputStream in = null;
 		File f = new File("data/contacts/");
+		if(!f.exists())
+			f.mkdir();
 		File[] contactFiles = f.listFiles();
+		if(contacts == null) contacts = new ArrayList<Contact>();
 
-		for (int i = 0; i < contactFiles.length; i++) {
+		int j = 0;
+		if(contactFiles != null) j = contactFiles.length;
+		for (int i = 0; i < j; i++) {
 			try {
 				in = new ObjectInputStream(new FileInputStream(contactFiles[i]));
 				Contact con = (Contact) in.readObject();
 				contacts.add(con);
 				in.close();
 			} catch (FileNotFoundException e) {
-				System.out.println("Could not load contact.");
+				//System.out.println("Could not load contact.");
+				//Again, this only means that the file does not exist:
+				//We should start empty, not throw error.
 			} catch (IOException e) {
-				System.out.println("Could not load contact.");
+				System.out.println("Could not load contacts.");
 			} catch (ClassNotFoundException e) {
-				System.out.println("Could not load contact.");
+				System.out.println("Could not load contacts.");
 			}
 		}
 	}
 
 	/**
-	 * Saves Configuration and Contacts for
-	 * future usage.
+	 * Saves Configuration and Contacts for future usage.
 	 */
-	public void saveData(){
+	public void saveData() {
 		saveConfig();
 		saveContacts();
 	}
 
 	/**
-	 * Saves Configuration for
-	 * future usage.
+	 * Saves Configuration for future usage.
 	 */
 	public void saveConfig() {
 		ObjectOutputStream out = null;
 
 		try {
+			File f = new File("/data/configuration.dat");
+			if (!f.exists())
+				f.createNewFile();
 			out = new ObjectOutputStream(new FileOutputStream(
 					"data/configuration.dat"));
 			out.writeObject(config);
@@ -154,23 +167,29 @@ public class DataStore extends AbstractTableModel {
 	}
 
 	/**
-	 * Saves Contacts list for
-	 * future usage.
+	 * Saves Contacts list for future usage.
 	 */
 	public void saveContacts() {
 		ObjectOutputStream out = null;
 
 		try {
+			// File dir = new File("data/contacts/");
+			// if(!dir.exists()) dir.mkdir();
 			for (int i = 0; i < contacts.size(); i++) {
+				File f = new File("data/contacts/" + contacts.get(i).getEmail()
+						+ ".ser");
+				if (!f.exists())
+					f.createNewFile();
 				out = new ObjectOutputStream(new FileOutputStream(
 						"data/contacts/" + contacts.get(i).getEmail() + ".ser"));
 				out.writeObject(contacts.get(i));
 				out.close();
 			}
 		} catch (FileNotFoundException e) {
-			System.out.println("Error in saving contacts.");
+			System.out.println("Error in saving contacts: No file present.");
 		} catch (IOException e) {
 			System.out.println("Error in saving contacts.");
+			e.printStackTrace();
 		}
 	}
 
@@ -213,15 +232,13 @@ public class DataStore extends AbstractTableModel {
 	}
 
 	/**
-	 * Returns element of person from contact list
-	 * Second argument:
-	 *    0: Name
-	 *    1: Postal Address
-	 *    2: Phone Number
-	 *    3: E-mail address
+	 * Returns element of person from contact list Second argument: 0: Name 1:
+	 * Postal Address 2: Phone Number 3: E-mail address
 	 * 
-	 * @param Integer number of person in list,
-	 * @param Integer attribute of person
+	 * @param Integer
+	 *            number of person in list,
+	 * @param Integer
+	 *            attribute of person
 	 * @return Object
 	 */
 	@Override

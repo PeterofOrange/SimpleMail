@@ -16,8 +16,12 @@ import javax.swing.JPanel;
 import javax.swing.JTable;//
 
 public class MainFrame extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5579764837969697449L;
 	private JTable table;
-	private JMenuBar menu, system;
+	private JMenuBar system;
 	private JMenu file, config, help;
 	private JMenuItem exit, compose, configure, test, about;
 	private JPanel base, layer;
@@ -58,8 +62,9 @@ public class MainFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//TODO: delete contact
-			//	DataStore.getDataStore().deleteContact(stuffGoesHere);
+				// TODO: delete contact
+				
+				//DataStore.getDataStore().getContactList().remove(index);
 			}
 
 		});

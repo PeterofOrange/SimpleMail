@@ -19,7 +19,11 @@ import javax.swing.JTextField;
 
 public class ContactEditingDlg extends JDialog {
 	
-    private GridBagConstraints constraints;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 772183832819353099L;
+	private GridBagConstraints constraints;
     private JLabel nameLabel, postLabel, phoneLabel, emailLabel;
     private JTextField nameText, postText, phoneText, emailText;
 	private JButton saveButton, cancelButton;
@@ -133,12 +137,13 @@ public class ContactEditingDlg extends JDialog {
 
 		public void saveContact() {
 			String name = nameText.getText();
-					String post  = postText.getText();
-					String phone = phoneText.getText();
-					String email = emailText.getText();
-					Contact add = new Contact(name, post, phone, email);
-					DataStore.getDataStore().addContact(add);
-					dispose();
+			String post  = postText.getText();
+			String phone = phoneText.getText();
+			String email = emailText.getText();
+			Contact add = new Contact(name, post, phone, email);
+			DataStore.getDataStore().addContact(add);
+			DataStore.getDataStore().saveContacts();
+			dispose();
 				//TODO: date main for table update
 	}
 }
