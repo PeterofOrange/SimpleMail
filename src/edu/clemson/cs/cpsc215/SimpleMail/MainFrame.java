@@ -85,6 +85,16 @@ public class MainFrame extends JFrame {
 
 		});
 
+		
+		configure.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ConfigurationDlg editConfig = new ConfigurationDlg();	
+			}
+
+		});
+		
+		
 		exit.addActionListener(new ActionListener() {
 
 			@Override
@@ -107,9 +117,6 @@ public class MainFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ArrayList people = new ArrayList();
-				
-				
-				
 				people = DataStore.getDataStore().getContactList();
 				if(people.size() > 0) {
 					Contact person = (Contact) people.get(table.getSelectedRow());
