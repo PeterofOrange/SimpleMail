@@ -27,13 +27,31 @@ public class ConfigurationTest {
 		omega3.setEmail("name@gmail.com");
 		assertEquals("name@gmail.com", omega3.getEmail());
 	}
+	
+	@Test
+	public void testPass() {
+		alpha.setPassword("unobtainium");
+		assertEquals(alpha.getPassword(), "unobtainium");
+		assertEquals(omega3.getPassword(), null);
+		omega3.setPassword("correcthorsebatterystaple");
+		assertEquals("correcthorsebatterystaple", omega3.getPassword());
+	}
 
 	@Test
 	public void testSmtpServ() {
 		assertEquals(alpha.getServerAddr(), "173.244.213.68");
 		assertEquals(omega3.getServerAddr(), null);
-		omega3.setServerAddr("173.244.569.78");
-		assertEquals("173.244.569.78", omega3.getServerAddr());
+		omega3.setServerAddr("127.0.0.1");
+		assertEquals("127.0.0.1", omega3.getServerAddr());
+	}
+	
+	@Test
+	public void testServPort() {
+		alpha.setServerPort("500");
+		assertEquals(alpha.getServerPort(), "500");
+		assertEquals(omega3.getServerPort(), null);
+		omega3.setServerPort("173");
+		assertEquals("173", omega3.getServerPort());
 	}
 
 }
