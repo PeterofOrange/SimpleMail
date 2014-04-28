@@ -17,66 +17,81 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMessage.RecipientType;
 
 public class EmailTransmission {
-	
+
 	private ArrayList<String> to = new ArrayList<String>();
 	private ArrayList<String> cc = new ArrayList<String>();
 	private ArrayList<String> bcc = new ArrayList<String>();
 	private String message;
 	private String subject;
+
 	/**
 	 * sends an email using the associated EmailTransmission object
 	 * 
-	 * @throws Exception 	If the email sending encounters a fatal error
+	 * @throws Exception
+	 *             If the email sending encounters a fatal error
 	 */
 	public void sendEmail() throws Exception {
 
 		Configuration config = DataStore.getDataStore().getConfig();
 		String serv = config.getServerAddr();
 		String fromAddr = config.getEmail();
-		//String passwd = config.getPassword();
-		
+		// String passwd = config.getPassword();
+
 		if (serv == null || serv == "") {
 			errorButton("Cannot send email: No SMTP server set.");
 			return;
-		}
-		else if (fromAddr == null || fromAddr == "") {
+		} else if (fromAddr == null || fromAddr == "") {
 			errorButton("Cannot send email: Email address (from) not set.");
 			return;
 		}
-		
+
 		Properties props = new Properties();
 		props.put("mail.smtp.host", serv);
-		
+
 		Session ses = Session.getDefaultInstance(props, null);
 		Message msg = new MimeMessage(ses);
-		
+
 		try {
-			for(int c = 0; c < to.size(); c++) {
-				msg.addRecipient(RecipientType.TO,  new InternetAddress(to.get(c)));
+			for (int c = 0; c < to.size(); c++) {
+				if(!to.get(c).equals("")){
+					msg.addRecipient(RecipientType.TO,
+							new InternetAddress(to.get(c)));
+					//System.out.println(cc.get(c));
+				}
 			}
-			for(int c = 0; c < cc.size(); c++) {
-				msg.addRecipient(RecipientType.CC, new InternetAddress(cc.get(c)));
+			//System.out.println(cc.size());
+			for (int c = 0; c < cc.size(); c++) {
+				if(!cc.get(c).equals("")){
+					//System.out.println(cc.get(c));
+					msg.addRecipient(RecipientType.CC,
+						new InternetAddress(cc.get(c)));
+				}
 			}
-			for(int c = 0; c < bcc.size(); c++) {
-				msg.addRecipient(RecipientType.BCC, new InternetAddress(bcc.get(c)));
+			for (int c = 0; c < bcc.size(); c++) {
+				if(!bcc.get(c).equals("")){
+					//System.out.println(bcc.get(c));
+					msg.addRecipient(RecipientType.BCC,
+							new InternetAddress(bcc.get(c)));
+				}
 			}
 			msg.setSubject(subject);
 			msg.setText(message);
 			msg.setFrom(new InternetAddress(fromAddr));
 			Transport.send(msg);
 		} catch (AddressException e) {
-			System.out.println();
 			errorButton("Error: invalid Address.");
+			//e.printStackTrace();
 		} catch (MessagingException e) {
 			errorButton("Error: could not send message.");
+			e.printStackTrace();
 		}
-		
+
 	}
 
 	/**
 	 * gets the To addresses to send email to
 	 * 
-	 * @return		the To addresses to send email to
+	 * @return the To addresses to send email to
 	 */
 	public ArrayList<String> getTo() {
 		return to;
@@ -85,7 +100,8 @@ public class EmailTransmission {
 	/**
 	 * adds a To address to send email to
 	 * 
-	 * @param newto		the To address to add
+	 * @param newto
+	 *            the To address to add
 	 */
 	public void addTo(String newto) {
 		to.add(newto);
@@ -103,7 +119,8 @@ public class EmailTransmission {
 	/**
 	 * adds a CC address to CC email to
 	 * 
-	 * @param newcc		the CC addresses to add
+	 * @param newcc
+	 *            the CC addresses to add
 	 */
 	public void addCc(String newcc) {
 		cc.add(newcc);
@@ -112,7 +129,7 @@ public class EmailTransmission {
 	/**
 	 * gets the list of BCC addresses to BCC email to
 	 * 
-	 * @return		the list of BCC address
+	 * @return the list of BCC address
 	 */
 	public ArrayList<String> getBcc() {
 		return bcc;
@@ -121,16 +138,17 @@ public class EmailTransmission {
 	/**
 	 * adds a BCC address to BCC email to
 	 * 
-	 * @param newbcc	the BCC address to add
+	 * @param newbcc
+	 *            the BCC address to add
 	 */
 	public void addBcc(String newbcc) {
 		bcc.add(newbcc);
 	}
-	
+
 	/**
 	 * clears all of the recipient fields fields (BCC, CC, To)
 	 */
-	public void clearRecipients(){
+	public void clearRecipients() {
 		bcc.clear();
 		cc.clear();
 		to.clear();
@@ -139,7 +157,7 @@ public class EmailTransmission {
 	/**
 	 * gets the subject to be send for an email
 	 * 
-	 * @return	the subject of the email
+	 * @return the subject of the email
 	 */
 	public String getSubject() {
 		return subject;
@@ -148,7 +166,8 @@ public class EmailTransmission {
 	/**
 	 * sets the subject to be used for an email
 	 * 
-	 * @param newsubject	the subject to set for the email
+	 * @param newsubject
+	 *            the subject to set for the email
 	 */
 	public void setSubject(String newsubject) {
 		subject = newsubject;
@@ -157,24 +176,27 @@ public class EmailTransmission {
 	/**
 	 * gets the message to be sent with an email
 	 * 
-	 * @return		the message to be sent with an email
+	 * @return the message to be sent with an email
 	 */
 	public String getMessage() {
 		return message;
 	}
+
 	/**
 	 * sets the message to send with an email
 	 * 
-	 * @param message	the text for the email message
+	 * @param message
+	 *            the text for the email message
 	 */
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	
+
 	/**
 	 * generates an error message if something goes wrong
 	 * 
-	 * @param s		the string to display in the error message
+	 * @param s
+	 *            the string to display in the error message
 	 */
 	public void errorButton(String s) {
 		System.out.println(s);
