@@ -17,7 +17,7 @@ public class ConfigurationTest {
 	public void setUp() throws Exception {
 		alpha = new Configuration("prschat@g.clemson.edu");
 		omega3 = new Configuration();
-		alpha.setSmtpServ("173.244.213.68");
+		alpha.setServerAddr("173.244.213.68");
 	}
 
 	@Test
@@ -30,10 +30,10 @@ public class ConfigurationTest {
 
 	@Test
 	public void testSmtpServ() {
-		assertEquals(alpha.getSmtpServ(), "173.244.213.68");
-		assertEquals(omega3.getSmtpServ(), null);
-		omega3.setSmtpServ("173.244.569.78");
-		assertEquals("173.244.569.78", omega3.getSmtpServ());
+		assertEquals(alpha.getServerAddr(), "173.244.213.68");
+		assertEquals(omega3.getServerAddr(), null);
+		omega3.setServerAddr("173.244.569.78");
+		assertEquals("173.244.569.78", omega3.getServerAddr());
 	}
 
 }

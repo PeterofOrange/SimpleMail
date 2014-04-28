@@ -9,8 +9,11 @@ import java.io.Serializable;
 public class Configuration implements Serializable {
 
 	private static final long serialVersionUID = -3397949010748837896L;
-	private String myMail;
-	private String smtpServ;
+	private String senderEmail;
+	private String senderPassword;
+	private String serverAddr;
+	private String serverPort;
+	
 
 	/**
 	 * Gets the email address for a Configuration
@@ -18,16 +21,16 @@ public class Configuration implements Serializable {
 	 * @return		the email address associated for this Configuration
 	 */
 	public String getEmail() {
-		return myMail;
+		return senderEmail;
 	}
 	
 	/**
 	 * Sets the email address for a Configuration
 	 * 
-	 * @param		myMail the email address to set
+	 * @param		senderEmail the email address to set
 	 */
-	public void setEmail(String myMail) {
-		this.myMail = myMail;
+	public void setEmail(String senderEmail) {
+		this.senderEmail = senderEmail;
 	}
 	
 	/**
@@ -35,28 +38,77 @@ public class Configuration implements Serializable {
 	 * 
 	 * @return		the SMTP server's address for this Configuration
 	 */
-	public String getSmtpServ() {
-		return smtpServ;
+	public String getserverAddr() {
+		return serverAddr;
+	}
+	
+	/**
+	 * Gets the email password for a Configuration
+	 * 
+	 * @return		the email password associated for this Configuration
+	 */
+	public String getPassword() {
+		return senderPassword;
+	}
+	
+	/**
+	 * Sets the email password for a Configuration
+	 * 
+	 * @param		senderPassword the email password to set
+	 */
+	public void setPassword(String senderPassword) {
+		this.senderPassword = senderPassword;
 	}
 	
 	/**
 	 * Sets the SMTP server's address for a Configuration
 	 * 
-	 * @param smtpServ		the SMTP server to set
+	 * @param serverAddr		the SMTP server to set
 	 */
-	public void setSmtpServ(String smtpServ) {
-		this.smtpServ = smtpServ;
+	public void setServerAddr(String serverAddr) {
+		this.serverAddr = serverAddr;
 	}
+	
+	/**
+	 * Gets the SMTP server's address for a configuration
+	 * 
+	 * 
+	 * @return		the SMTP server's address for this configuration
+	 */
+	public String getServerAddr() {
+		return serverAddr;
+	}
+	
+	/**
+	 * Sets the SMTP server's port for a Configuration
+	 * 
+	 * @param serverAddr		the SMTP server port to set
+	 */
+	public void setServerPort(String serverPort) {
+		this.serverPort = serverPort;
+	}
+	
+	/**
+	 * Gets the SMTP server's port for a configuration
+	 * 
+	 * 
+	 * @return		the SMTP server's port for this configuration
+	 */
+	public String getServerPort() {
+		return serverPort;
+	}
+	
+	
 	
 	//use Configuration() then setMail() instead to save a function or two, maybe, could delete this
 	/**
 	 * Creates a Configuration an email address
 	 * 
-	 * @param myMail		the email address for this Configuration
+	 * @param senderEmail		the email address for this Configuration
 	 */
-	public Configuration(String myMail) {
+	public Configuration(String senderEmail) {
 		super();
-		this.myMail = myMail;
+		this.senderEmail = senderEmail;
 	}
 	
 	/**

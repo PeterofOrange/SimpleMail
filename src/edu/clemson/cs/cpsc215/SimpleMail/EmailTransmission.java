@@ -24,10 +24,10 @@ public class EmailTransmission {
 	private String message;
 	private String subject;
 	
-	public void sendEmail() throws Exception{
+	public void sendEmail() throws Exception {
 
 		Configuration config = DataStore.getDataStore().getConfig();
-		String serv = config.getSmtpServ();
+		String serv = config.getServerAddr();
 		String fromAddr = config.getEmail();
 		
 //		if (serv == null || serv == "") {
