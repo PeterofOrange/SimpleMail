@@ -156,7 +156,7 @@ public class DataStore extends AbstractTableModel {
 			/*if (!f.exists())
 				f.createNewFile();*/
 			out = new ObjectOutputStream(new FileOutputStream(
-					"data/configuration.dat"));
+					"data/configuration.ser"));
 			out.writeObject(config);
 			out.close();
 		} catch (FileNotFoundException e) {
