@@ -15,13 +15,15 @@ public class MainFrame extends JFrame {
 
 	private static final long serialVersionUID = 1701901772098877485L;
 
-	public MainFrame() {
-		//commented out this error not sure what we're doing on it
-		JTable table = new JTable(DataStore.getDataStore());//
+	public MainFrame(String title) {
+		super(title);
+		super.setSize(800, 800);
+
+		JTable table = new JTable(DataStore.getDataStore());
 		JMenuBar system = new JMenuBar();
-		JMenu File = new JMenu();
-		JMenu Config = new JMenu();
-		JMenu Help = new JMenu();
+		JMenu File = new JMenu("File");
+		JMenu Config = new JMenu("Config");
+		JMenu Help = new JMenu("Help");
 		JPanel base = new JPanel();
 		JButton add = new JButton("Add");
 		JButton edit = new JButton("Edit");
@@ -34,5 +36,7 @@ public class MainFrame extends JFrame {
 		base.add(add);
 		base.add(edit);
 		base.add(Delete);
+		super.add(base);
 	}
+
 }
