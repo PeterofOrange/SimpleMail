@@ -72,56 +72,108 @@ public class EmailTransmission {
 	}
 
 	/**
-	 * gets the To address
+	 * gets the To addresses to send email to
 	 * 
-	 * @return
+	 * @return		the To addresses to send email to
 	 */
 	public ArrayList<String> getTo() {
 		return to;
 	}
 
+	/**
+	 * adds a To address to send email to
+	 * 
+	 * @param newto		the To address to add
+	 */
 	public void addTo(String newto) {
 		to.add(newto);
 	}
 
+	/**
+	 * gets the CC addresses to CC email to
+	 * 
+	 * @return the list of CC addresses
+	 */
 	public ArrayList<String> getCc() {
 		return cc;
 	}
 
+	/**
+	 * adds a CC address to CC email to
+	 * 
+	 * @param newcc		the CC addresses to add
+	 */
 	public void addCc(String newcc) {
 		cc.add(newcc);
 	}
 
+	/**
+	 * gets the list of BCC addresses to BCC email to
+	 * 
+	 * @return		the list of BCC address
+	 */
 	public ArrayList<String> getBcc() {
 		return bcc;
 	}
 
+	/**
+	 * adds a BCC address to BCC email to
+	 * 
+	 * @param newbcc	the BCC address to add
+	 */
 	public void addBcc(String newbcc) {
 		bcc.add(newbcc);
 	}
 	
+	/**
+	 * clears all of the recipient fields fields (BCC, CC, To)
+	 */
 	public void clearRecipients(){
 		bcc.clear();
 		cc.clear();
 		to.clear();
 	}
 
+	/**
+	 * gets the subject to be send for an email
+	 * 
+	 * @return	the subject of the email
+	 */
 	public String getSubject() {
 		return subject;
 	}
 
+	/**
+	 * sets the subject to be used for an email
+	 * 
+	 * @param newsubject	the subject to set for the email
+	 */
 	public void setSubject(String newsubject) {
 		subject = newsubject;
 	}
 
+	/**
+	 * gets the message to be sent with an email
+	 * 
+	 * @return		the message to be sent with an email
+	 */
 	public String getMessage() {
 		return message;
 	}
-
+	/**
+	 * sets the message to send with an email
+	 * 
+	 * @param message	the text for the email message
+	 */
 	public void setMessage(String message) {
 		this.message = message;
 	}
 	
+	/**
+	 * generates an error message if something goes wrong
+	 * 
+	 * @param s		the string to display in the error message
+	 */
 	public void errorButton(String s) {
 		System.out.println(s);
 	}
