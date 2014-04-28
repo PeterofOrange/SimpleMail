@@ -26,7 +26,6 @@ public class DataStore extends AbstractTableModel {
 	private DataStore() {
 		File dir = new File("data/contacts/");
 		dir.mkdirs();
-
 		loadData();
 	}
 
@@ -165,7 +164,6 @@ public class DataStore extends AbstractTableModel {
 			System.out.println("Error saving configuration.");
 		}
 	}
-
 	/**
 	 * Saves Contacts list for future usage.
 	 */

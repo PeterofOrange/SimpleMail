@@ -42,6 +42,7 @@ public class EmailTransmissionDlg extends JDialog {
 		setupForm();
 		toText.setText(con.getEmail());
 		this.pack();
+		this.setModalityType(DEFAULT_MODALITY_TYPE);
 		this.setVisible(true);
 	}
 
@@ -166,10 +167,19 @@ public class EmailTransmissionDlg extends JDialog {
 	public void sendAction() {
 		EmailTransmission letter = new EmailTransmission();
 		String delims = "[, ]+";
-
 		String[] addresses = toText.getText().split(delims);
-		for(int c = 0; c < addresses.length; c++)
-			letter.addTo(addresses[c]);
+		
+		
+		for(int c = 0; c < addresses.length; c++) {
+			if (addresses[c].matches(".*@.*")) {
+				letter.addTo(addresses[c]);
+			}
+			else {
+				ErrorDlg invalidEmailError = new ErrorDlg("Invalid Email: " + addresses[c] + ".");
+			}
+	}
+
+		
 		
 		addresses = this.ccText.getText().split(delims);
 		for(int c = 0; c < addresses.length; c++)

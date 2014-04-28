@@ -5,21 +5,28 @@
 package edu.clemson.cs.cpsc215.SimpleMail;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;//
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 
 
@@ -31,7 +38,7 @@ public class MainFrame extends JFrame {
 	private JMenu file, config, help;
 	private JMenuItem exit, compose, configure, test, about;
 	private JPanel base, layer;
-	private JButton add, edit, delete, yes, no;
+	private JButton add, edit, delete;
 	/**
 	 * constructs a mainframe object
 	 * @param SimpleMail
@@ -39,13 +46,13 @@ public class MainFrame extends JFrame {
 	public MainFrame(String title) {
 		super(title);	
 		super.setSize(800, 400);
-
+                
 		table = new JTable(DataStore.getDataStore());
 		file = new JMenu("File");
 		system = new JMenuBar();
 		file.add(exit = new JMenuItem("Exit"));
 		file.add(compose = new JMenuItem("Compose Mail"));
-		config = new JMenu("Config");
+		config = new JMenu("Configuration");
 		config.add(configure = new JMenuItem("Configure"));
 		config.add(test = new JMenuItem("Test"));
 		help = new JMenu("Help");
@@ -132,7 +139,7 @@ public class MainFrame extends JFrame {
 				people = DataStore.getDataStore().getContactList();
 				if(people.size() > 0) {
 					Contact person = (Contact) people.get(table.getSelectedRow());
-				chose = JOptionPane.showConfirmDialog(layer, "Are you sure you want to delete " + person.getName());
+				chose = JOptionPane.showConfirmDialog(layer, "Are you sure you want to delete " + person.getName() + "?");
 				if(chose == 0) {
 				people.remove(table.getSelectedRow());
 				DataStore.getDataStore().setContactList(people);
@@ -143,12 +150,10 @@ public class MainFrame extends JFrame {
 			}
 	});
 	
-	
-
 		system.add(file);
 		system.add(config);
 		system.add(help);
-		super.add( new JScrollPane(table),BorderLayout.CENTER);
+		super.add(new JScrollPane(table), BorderLayout.CENTER);
 		super.add(system, BorderLayout.PAGE_START);
 		layer.add(add, BorderLayout.LINE_START);
 		layer.add(edit, BorderLayout.CENTER);
