@@ -18,33 +18,34 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 public class ConfigurationDlg extends JDialog {
-	
-    private GridBagConstraints constraints;
-    private JLabel emailAddrLabel, emailPasswordLabel, serverAddrLabel, serverPortLabel;
-    private JTextField emailAddrText, emailPasswordText, serverAddrText, serverPortText;
+
+	private GridBagConstraints constraints;
+	private JLabel emailAddrLabel, emailPasswordLabel, serverAddrLabel,
+			serverPortLabel;
+	private JTextField emailAddrText, emailPasswordText, serverAddrText,
+			serverPortText;
 	private JButton saveButton, cancelButton;
-    
-	
+
 	public ConfigurationDlg(Frame main, Contact con) {
-			super(main, "Add or Edit a Contact");
-			setLayout(new GridBagLayout());
-			constraints = new GridBagConstraints();
-			constraints.anchor = GridBagConstraints.WEST;
-			constraints.insets = new Insets(5, 5, 5, 5);
-			setLocationRelativeTo(null);
-			setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-			setupMenu();
-			setupForm();
-			emailAddrText.setText(con.getName());
-			emailPasswordText.setText(con.getPost());
-			serverAddrText.setText(con.getPhone());
-			serverPortText.setText(con.getEmail());
-			this.pack();
-			this.setVisible(true);
-		}
-	
+		super(main, "Add or Edit a Contact");
+		setLayout(new GridBagLayout());
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.WEST;
+		constraints.insets = new Insets(5, 5, 5, 5);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setupMenu();
+		setupForm();
+		emailAddrText.setText(con.getName());
+		emailPasswordText.setText(con.getPost());
+		serverAddrText.setText(con.getPhone());
+		serverPortText.setText(con.getEmail());
+		this.pack();
+		this.setVisible(true);
+	}
+
 	public ConfigurationDlg() {
-		//super(main, "Add or Edit a Contact");
+		// super(main, "Add or Edit a Contact");
 		setLayout(new GridBagLayout());
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.WEST;
@@ -56,12 +57,12 @@ public class ConfigurationDlg extends JDialog {
 		this.pack();
 		this.setVisible(true);
 	}
-	
-		private void setupMenu() {
+
+	private void setupMenu() {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	private void setupForm() {
 		emailAddrLabel = new JLabel("Email address: ");
 		constraints.gridx = 0;
@@ -71,8 +72,7 @@ public class ConfigurationDlg extends JDialog {
 		constraints.gridx = 1;
 		constraints.fill = GridBagConstraints.HORIZONTAL;
 		this.add(emailAddrText, constraints);
-		
-		
+
 		emailPasswordLabel = new JLabel("Email password: ");
 		constraints.gridx = 0;
 		constraints.gridy = 1;
@@ -81,8 +81,7 @@ public class ConfigurationDlg extends JDialog {
 		constraints.gridx = 1;
 		constraints.fill = GridBagConstraints.HORIZONTAL;
 		this.add(emailPasswordText, constraints);
-		
-		
+
 		serverAddrLabel = new JLabel("SMTP server address: ");
 		constraints.gridx = 0;
 		constraints.gridy = 2;
@@ -91,7 +90,7 @@ public class ConfigurationDlg extends JDialog {
 		constraints.gridx = 1;
 		constraints.fill = GridBagConstraints.HORIZONTAL;
 		this.add(serverAddrText, constraints);
-		
+
 		serverPortLabel = new JLabel("SMTP server port: ");
 		constraints.gridx = 0;
 		constraints.gridy = 3;
@@ -100,7 +99,7 @@ public class ConfigurationDlg extends JDialog {
 		constraints.gridx = 1;
 		constraints.fill = GridBagConstraints.HORIZONTAL;
 		this.add(serverPortText, constraints);
-		
+
 		saveButton = new JButton("Save");
 		saveButton.setFont(new Font("Arial", Font.BOLD, 16));
 		constraints.gridx = 1;
@@ -116,34 +115,40 @@ public class ConfigurationDlg extends JDialog {
 		constraints.gridheight = 2;
 		constraints.gridwidth = 1;
 		this.add(cancelButton, constraints);
-		
-		
+
 		cancelButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-			}});
-			
-		
+			}
+		});
+
 		saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				DataStore.getDataStore().getConfig().setEmail(emailAddrText.getText());
-				DataStore.getDataStore().getConfig().setPassword(emailPasswordText.getText());
-				DataStore.getDataStore().getConfig().setServerAddr(serverAddrText.getText());
-				DataStore.getDataStore().getConfig().setServerPort(serverPortText.getText());
+				DataStore.getDataStore().getConfig()
+						.setEmail(emailAddrText.getText());
+				DataStore.getDataStore().getConfig()
+						.setPassword(emailPasswordText.getText());
+				DataStore.getDataStore().getConfig()
+						.setServerAddr(serverAddrText.getText());
+				DataStore.getDataStore().getConfig()
+						.setServerPort(serverPortText.getText());
 				DataStore.getDataStore().saveConfig();
-				
-			}});
+
+			}
+		});
 	}
 
-		public void saveContact() {
-			String name = emailAddrText.getText();
-					String post  = emailPasswordText.getText();
-					String phone = serverAddrText.getText();
-					String email = serverPortText.getText();
-					Contact add = new Contact(name, post, phone, email);
-					DataStore.getDataStore().addContact(add);
-					dispose();
-				//TODO: date main for table update
+	public void saveContact() {
+		String name = emailAddrText.getText();
+		String post = emailPasswordText.getText();
+		String phone = serverAddrText.getText();
+		String email = serverPortText.getText();
+		Contact add = new Contact(name, post, phone, email);
+		DataStore.getDataStore().addContact(add);
+
+		DataStore.getDataStore().saveConfig();
+		dispose();
+		// TODO: date main for table update
 	}
 }

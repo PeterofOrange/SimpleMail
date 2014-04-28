@@ -25,7 +25,7 @@ public class DataStore extends AbstractTableModel {
 
 	private DataStore() {
 		File dir = new File("data/contacts/");
-		boolean x = dir.mkdirs();
+		dir.mkdirs();
 
 		loadData();
 	}
@@ -97,7 +97,7 @@ public class DataStore extends AbstractTableModel {
 			config = (Configuration) in.readObject();
 			in.close();
 		} catch (FileNotFoundException e) {
-			// System.out.println("Error in loading configuration.");
+			System.out.println("Error in loading configuration.");
 			// Should return no error, this just means first load
 		} catch (IOException e) {
 			System.out.println("Error in loading configuration.");
@@ -152,9 +152,9 @@ public class DataStore extends AbstractTableModel {
 		ObjectOutputStream out = null;
 
 		try {
-			File f = new File("/data/configuration.ser");
-			if (!f.exists())
-				f.createNewFile();
+			//File f = new File("data/configuration.ser");
+			/*if (!f.exists())
+				f.createNewFile();*/
 			out = new ObjectOutputStream(new FileOutputStream(
 					"data/configuration.dat"));
 			out.writeObject(config);

@@ -10,12 +10,12 @@ public class Driver {
 
 	public static void main(String [] args) {
 		
-		ArrayList<Contact> contacts = DataStore.getDataStore().getContactList();
-		DataStore.getDataStore().getConfig().setEmail("yates@yates.yates");
-		DataStore.getDataStore().getConfig().getEmail();
+		/*ArrayList<Contact> contacts = DataStore.getDataStore().getContactList();
+		DataStore.getDataStore().getConfig().setEmail("yates@yates.yates");*/
+		//DataStore.getDataStore().getConfig().getEmail();
 		
-		Contact guy = new Contact("bill clemson","404 street","536-7778", "bill@yahoo.com");
-		contacts.add(guy);
+		//Contact guy = new Contact("bill clemson","404 street","536-7778", "bill@yahoo.com");
+		//contacts.add(guy);
 		
 		MainFrame test = new MainFrame("SimpleMail");
 		test.setVisible(true);
