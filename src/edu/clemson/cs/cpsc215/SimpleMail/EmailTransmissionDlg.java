@@ -45,7 +45,12 @@ public class EmailTransmissionDlg extends JDialog {
 		this.setVisible(true);
 	}
 
-	public EmailTransmissionDlg() {
+	/**
+	 * Constructs an EmailTransmissionDlg with contact at index
+	 * 
+	 * @param index the index of the content fill the form with
+	 */
+	public EmailTransmissionDlg(int index) {
 		// super(main, "Send Email");
 		setLayout(new GridBagLayout());
 		constraints = new GridBagConstraints();
@@ -56,6 +61,10 @@ public class EmailTransmissionDlg extends JDialog {
 		setupMenu();
 		setupForm();
 		this.pack();
+		
+		Contact con = new Contact();
+		con = DataStore.getDataStore().getContactList().get(index);
+		toText.setText(con.getEmail());
 		this.setVisible(true);
 	}
 
