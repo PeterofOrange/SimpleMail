@@ -1,6 +1,8 @@
 package edu.clemson.cs.cpsc215.SimpleMail;
 
+import java.util.ArrayList;
 import java.util.Properties;
+
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -12,7 +14,13 @@ import javax.mail.internet.MimeMessage.RecipientType;
 
 public class EmailUtils {
 	
-	public static void  sendEmail(String toAddr, String ccAddr, String bccAddr, String subject, String message) {
+	private ArrayList<String> to = new ArrayList<String>();
+	private ArrayList<String> cc = new ArrayList<String>();
+	private ArrayList<String> bcc = new ArrayList<String>();
+	private String message;
+	private String subject;
+	
+	public void sendEmail() {
 
 		Configuration config = DataStore.getDataStore().getConfig();
 		String serv = config.getSmtpServ();
@@ -32,20 +40,72 @@ public class EmailUtils {
 		Message msg = new MimeMessage(ses);
 		
 		try {
-			msg.setRecipient(RecipientType.TO,  new InternetAddress(toAddr));
-			msg.setRecipient(RecipientType.CC, new InternetAddress(ccAddr));
-			msg.setRecipient(RecipientType.BCC, new InternetAddress(bccAddr));
+			for(int c = 0; c < to.size(); c++) {
+				msg.setRecipient(RecipientType.TO,  new InternetAddress(to.get(c)));
+			}
+			for(int c = 0; c < cc.size(); c++) {
+				msg.setRecipient(RecipientType.CC, new InternetAddress(cc.get(c)));
+			}
+			for(int c = 0; c < bcc.size(); c++) {
+				msg.setRecipient(RecipientType.BCC, new InternetAddress(bcc.get(c)));
+			}
 			msg.setSubject(subject);
 			msg.setText(message);
 			msg.setFrom(new InternetAddress(fromAddr));
 			Transport.send(msg);
 		} catch (AddressException e) {
 			System.out.println("Error: invalid Address.");
-			e.printStackTrace();
+			//e.printStackTrace();
 		} catch (MessagingException e) {
 			System.out.println("Error: could not send message.");
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		
+	}
+
+	public ArrayList<String> getTo() {
+		return to;
+	}
+
+	public void addTo(String newto) {
+		to.add(newto);
+	}
+
+	public ArrayList<String> getCc() {
+		return cc;
+	}
+
+	public void addCc(String newcc) {
+		cc.add(newcc);
+	}
+
+	public ArrayList<String> getBcc() {
+		return bcc;
+	}
+
+	public void addBcc(String newbcc) {
+		bcc.add(newbcc);
+	}
+	
+	public void clearRecipients(){
+		bcc.clear();
+		cc.clear();
+		to.clear();
+	}
+
+	public String getSubject() {
+		return subject;
+	}
+
+	public void setSubject(String newsubject) {
+		subject = newsubject;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
 	}
 }

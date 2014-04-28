@@ -17,7 +17,7 @@ public class DataStore extends AbstractTableModel{
 	 * 
 	 */
 	private static final long serialVersionUID = 5177090278890104086L;
-	private static DataStore toSelf = new DataStore();
+	private static final DataStore toSelf = new DataStore();
 	private ArrayList<Contact> contacts = new ArrayList<Contact>();
 	private Configuration config = new Configuration();
 
@@ -25,9 +25,6 @@ public class DataStore extends AbstractTableModel{
 	}
 
 	public static DataStore getDataStore() {
-		if (toSelf == null) {
-			toSelf = new DataStore();
-		}
 		return toSelf;
 	}
 
