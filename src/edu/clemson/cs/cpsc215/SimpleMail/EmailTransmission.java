@@ -49,12 +49,12 @@ public class EmailTransmission {
 		}
 
 		Properties props = new Properties();
-		props.put("mail.smtp.host", serv);System.out.println("Server is " + serv);
-		props.put("mail.smtp.auth", "true");
-		props.put("mail.transport.protocol", "smtp");
-		props.put("mail.smtp.socketFactory.Port", config.getServerPort());
+		props.put("mail.smtp.host", "smtp.clemson.edu");
+		props.put("mail.smtp.socketFactory.port", "465");
 		props.put("mail.smtp.socketFactory.class",
 				"javax.net.ssl.SSLSocketFactory");
+		props.put("mail.smtp.auth", "true");
+
 		final String username = uname;
 		final String password = passwd;
 
@@ -67,7 +67,6 @@ public class EmailTransmission {
 			}
 		};
 
-		//Session ses = Session.getDefaultInstance(props, null);
 		Session ses = Session.getDefaultInstance(props, auth);
 		Message msg = new MimeMessage(ses);
 
@@ -76,33 +75,28 @@ public class EmailTransmission {
 				if(!to.get(c).equals("")){
 					msg.addRecipient(RecipientType.TO,
 						new InternetAddress(to.get(c)));
-					//System.out.println(cc.get(c));
 				}
 			}
-			//System.out.println(cc.size());
 			for (int c = 0; c < cc.size(); c++) {
 				if(!cc.get(c).equals("")){
-					//System.out.println(cc.get(c));
 					msg.addRecipient(RecipientType.CC,
 						new InternetAddress(cc.get(c)));
 				}
 			}
 			for (int c = 0; c < bcc.size(); c++) {
 				if(!bcc.get(c).equals("")){
-					//System.out.println(bcc.get(c));
 					msg.addRecipient(RecipientType.BCC,
 							new InternetAddress(bcc.get(c)));
 				}
 			}
 			msg.setSubject(subject);
 			msg.setText(message);
-			msg.setFrom(new InternetAddress(fromAddr));
+			msg.setFrom(new InternetAddress(uname));
 			Transport.send(msg);
 		} catch (AddressException e) {
 			errorButton("Error: invalid Address.");
 		} catch (MessagingException e) {
 			errorButton("Error: could not send message.");
-			e.printStackTrace();
 		}
 
 	}
