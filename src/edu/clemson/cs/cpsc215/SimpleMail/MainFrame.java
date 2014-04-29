@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -23,7 +25,6 @@ import javax.swing.JTable;
 public class MainFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private int selected;
 	private JTable table;
 	private JMenuBar system;
 	private JMenu file, config, help;
@@ -47,7 +48,7 @@ public class MainFrame extends JFrame {
 	 * sets up the form for the MainFrame JFrame
 	 */
 	private void setupForm() {
-		//setDefaultCloseOperation(JFrame.);
+		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		table = new JTable(DataStore.getDataStore());
 		file = new JMenu("File");
 		system = new JMenuBar();
@@ -143,17 +144,33 @@ public class MainFrame extends JFrame {
 				ArrayList<Contact> contacts = DataStore.getDataStore()
 						.getContactList();
 				Contact contact = new Contact();
-				if (contacts.size() > 0)
+				if (contacts.size() > 0) {
 					contact = (Contact) contacts.get(table.getSelectedRow());
+				}
 
-				selected = JOptionPane.showConfirmDialog(layer,
-						"Are you sure you want to delete " + contact.getName()
-								+ "?");
+				int selected = JOptionPane.showOptionDialog(null,
+						"Are you sure want to delete " + contact.getName()
+								+ "?", "Confirm contact deletion",
+						JOptionPane.YES_NO_OPTION,
+						JOptionPane.QUESTION_MESSAGE, null, null, null);
 				if (selected == 0) {
 					contacts.remove(table.getSelectedRow());
 					DataStore.getDataStore().setContactList(contacts);
 					DataStore.getDataStore().fireTableRowsInserted(0,
 							DataStore.getDataStore().getRowCount());
+				}
+			}
+		});
+
+		this.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent evt) {
+				int close = JOptionPane.showOptionDialog(null,
+						"Are you sure you want to close the application?",
+						"Exit?", JOptionPane.YES_NO_OPTION,
+						JOptionPane.QUESTION_MESSAGE, null, null, null);
+				if (close == 0) {
+					DataStore.getDataStore().saveData();
+					dispose();
 				}
 			}
 		});

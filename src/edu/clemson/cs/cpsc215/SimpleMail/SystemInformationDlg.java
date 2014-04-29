@@ -62,7 +62,7 @@ public class SystemInformationDlg extends JDialog {
 				EmailTransmissionDlg newMail = new EmailTransmissionDlg("prschat@clemson.edu, parkerd@clemson.edu, pschnei@clemson.edu");
 			}
 		});
-		this.setTitle("Edit Configuration");
+		this.setTitle("About this program");
 		this.pack();
 		this.setVisible(true);
 	}
