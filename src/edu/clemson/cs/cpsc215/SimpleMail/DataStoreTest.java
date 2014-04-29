@@ -1,3 +1,8 @@
+//Parker Davis (parkerd), Peter Schatteman (prschat), Phillip Schneider (pschnei)
+//Last Modified: Apr 28 2014
+//Assignment 4: SimpleMail
+//This file contains the DataStore JUnit test class and associated methods
+
 package edu.clemson.cs.cpsc215.SimpleMail;
 
 import static org.junit.Assert.*;
