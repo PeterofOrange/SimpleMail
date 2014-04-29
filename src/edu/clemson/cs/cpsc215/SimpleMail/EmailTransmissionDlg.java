@@ -79,6 +79,25 @@ public class EmailTransmissionDlg extends JDialog {
 		this.setVisible(true);
 	}
 
+	/**
+	 * Creates an EmailTransmissionDlg with predefined emails
+	 * 
+	 * @param emails	the email(s) to be inserted in the 'to' field
+	 */
+	public EmailTransmissionDlg(String emails) {
+		setLayout(new GridBagLayout());
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.WEST;
+		constraints.insets = new Insets(6, 6, 6, 6);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setupForm();
+		this.pack();
+		toText.setText(emails);
+		this.setTitle("Send Email to the Developers");
+		this.setVisible(true);
+	}
+
 	private void setupForm() {
 		fromLabel = new JLabel("From: ");
 		constraints.gridx = 0;

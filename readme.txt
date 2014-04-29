@@ -16,5 +16,5 @@ who did what:
     ErrorDlg.java: Phillip, Parker
     MainFrame.java: Peter, Parker, Phillip
     SmtpAuthenticator.java: Peter
-    SystemInformationDlg.java: Phillip
+    SystemInformationDlg.java: Phillip, Parker
     UnitTests.java: Peter

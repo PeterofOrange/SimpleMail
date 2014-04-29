@@ -47,6 +47,7 @@ public class MainFrame extends JFrame {
 	 * sets up the form for the MainFrame JFrame
 	 */
 	private void setupForm() {
+		//setDefaultCloseOperation(JFrame.);
 		table = new JTable(DataStore.getDataStore());
 		file = new JMenu("File");
 		system = new JMenuBar();
