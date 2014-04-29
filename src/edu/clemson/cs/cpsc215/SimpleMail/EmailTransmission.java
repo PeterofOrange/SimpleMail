@@ -6,6 +6,8 @@ package edu.clemson.cs.cpsc215.SimpleMail;
 
 import java.util.ArrayList;
 import java.util.Properties;
+
+import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -33,43 +35,61 @@ public class EmailTransmission {
 	public void sendEmail() throws Exception {
 
 		Configuration config = DataStore.getDataStore().getConfig();
-		String serverAddr = config.getServerAddr();
+		String serv = config.getServerAddr();
 		String fromAddr = config.getEmail();
+		String uname = config.getEmail();
+		String passwd = config.getPassword();
 
-		if (serverAddr == null || serverAddr == "") {
-			ErrorDlg.showError("Could not send email: server address incorrect");
+		if (serv == null || serv == "") {
+			errorButton("Cannot send email: No SMTP server set.");
+			return;
 		} else if (fromAddr == null || fromAddr == "") {
-			ErrorDlg.showError("Could not send email: from address incorrect");
+			errorButton("Cannot send email: Email address (from) not set.");
+			return;
 		}
 
 		Properties props = new Properties();
-		props.put("mail.smtp.host", serverAddr);
+		props.put("mail.smtp.host", serv);System.out.println("Server is " + serv);
 		props.put("mail.smtp.auth", "true");
-		props.put("mail.smtp.port", config.getServerPort());
-		Authenticator auth = new Authenticator();
+		props.put("mail.transport.protocol", "smtp");
+		props.put("mail.smtp.socketFactory.Port", config.getServerPort());
+		props.put("mail.smtp.socketFactory.class",
+				"javax.net.ssl.SSLSocketFactory");
+		final String username = uname;
+		final String password = passwd;
 
+		
+		Authenticator auth = new Authenticator() {
+			//Define anonymized function
+			//returns a PasswordAuthentication Object
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(username, password);
+			}
+		};
+
+		//Session ses = Session.getDefaultInstance(props, null);
 		Session ses = Session.getDefaultInstance(props, auth);
 		Message msg = new MimeMessage(ses);
 
 		try {
 			for (int c = 0; c < to.size(); c++) {
-				if (!to.get(c).equals("")) {
+				if(!to.get(c).equals("")){
 					msg.addRecipient(RecipientType.TO,
-							new InternetAddress(to.get(c)));
-					// System.out.println(cc.get(c));
+						new InternetAddress(to.get(c)));
+					//System.out.println(cc.get(c));
 				}
 			}
-			// System.out.println(cc.size());
+			//System.out.println(cc.size());
 			for (int c = 0; c < cc.size(); c++) {
-				if (!cc.get(c).equals("")) {
-					// System.out.println(cc.get(c));
+				if(!cc.get(c).equals("")){
+					//System.out.println(cc.get(c));
 					msg.addRecipient(RecipientType.CC,
-							new InternetAddress(cc.get(c)));
+						new InternetAddress(cc.get(c)));
 				}
 			}
 			for (int c = 0; c < bcc.size(); c++) {
-				if (!bcc.get(c).equals("")) {
-					// System.out.println(bcc.get(c));
+				if(!bcc.get(c).equals("")){
+					//System.out.println(bcc.get(c));
 					msg.addRecipient(RecipientType.BCC,
 							new InternetAddress(bcc.get(c)));
 				}
@@ -79,9 +99,9 @@ public class EmailTransmission {
 			msg.setFrom(new InternetAddress(fromAddr));
 			Transport.send(msg);
 		} catch (AddressException e) {
-			ErrorDlg.showError("Could not send email: invalid to Address");
+			errorButton("Error: invalid Address.");
 		} catch (MessagingException e) {
-			ErrorDlg.showError("Could not send email");
+			errorButton("Error: could not send message.");
 			e.printStackTrace();
 		}
 
@@ -191,18 +211,13 @@ public class EmailTransmission {
 		this.message = message;
 	}
 
-	private class Authenticator extends javax.mail.Authenticator {
-		private PasswordAuthentication authentication;
-
-		public Authenticator() {
-			Configuration config = DataStore.getDataStore().getConfig();
-			String username = config.getEmail();
-			String password = config.getPassword();
-			authentication = new PasswordAuthentication(username, password);
-		}
-
-		protected PasswordAuthentication getPasswordAuthentication() {
-			return authentication;
-		}
+	/**
+	 * generates an error message if something goes wrong
+	 * 
+	 * @param s
+	 *            the string to display in the error message
+	 */
+	public void errorButton(String s) {
+		System.out.println(s);
 	}
 }
