@@ -9,7 +9,7 @@ public class MainFrameMediator {
 
 	public void configure() {
 		ConfigurationDlg editConfig = new ConfigurationDlg();
-		editConfig.setVisible(true);
+		editConfig.setEnabled(true);
 	}
 
 	public void exit() {
@@ -21,28 +21,28 @@ public class MainFrameMediator {
 		if (e.getClickCount() == 2 && !e.isConsumed()) {
 			e.consume();
 			EmailTransmissionDlg newMail = new EmailTransmissionDlg(loc);
-			newMail.setVisible(true);
+			newMail.setEnabled(true);
 		}
 	}
 
 	public void add() {
 		ContactEditingDlg newContact = new ContactEditingDlg(-1);
-		newContact.setVisible(true);
+		newContact.setEnabled(true);
 	}
 
 	public void compose() {
 		EmailTransmissionDlg newMail = new EmailTransmissionDlg(-1);
-		newMail.setVisible(true);
+		newMail.setEnabled(true);
 	}
 
 	public void edit(int loc) {
 		ContactEditingDlg editContact = new ContactEditingDlg(loc);
-		editContact.setVisible(true);
+		editContact.setEnabled(true);
 	}
 
 	public void about() {
 		SystemInformationDlg info = new SystemInformationDlg();
-		info.setVisible(true);
+		info.setEnabled(true);
 	}
 
 	public void delete(int row) {
