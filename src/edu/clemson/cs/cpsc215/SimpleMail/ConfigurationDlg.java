@@ -127,8 +127,9 @@ public class ConfigurationDlg extends JDialog {
 				} else {
 					DataStore.getDataStore().getConfig()
 							.setEmail(emailAddrText.getText());
+					String tmp = emailPasswordText.getPassword().toString();
 					DataStore.getDataStore().getConfig()
-							.setPassword(emailPasswordText.getText());
+							.setPassword(tmp);
 					DataStore.getDataStore().getConfig()
 							.setServerAddr(serverAddrText.getText());
 					DataStore.getDataStore().getConfig()

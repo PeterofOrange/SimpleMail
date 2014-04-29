@@ -5,17 +5,13 @@
 package edu.clemson.cs.cpsc215.SimpleMail;
 
 import java.io.Serializable;
-import java.security.*;
-import javax.crypto.*;
-import javax.crypto.spec.PBEKeySpec;
-import javax.crypto.spec.SecretKeySpec;
 
 public class Configuration implements Serializable {
 
 	private static final long serialVersionUID = -3397949010748837896L;
 	private String senderEmail;
 	private String senderPassword;
-	private byte[] senderPasswordCrypt;
+	//private byte[] senderPasswordCrypt;
 	private String serverAddr;
 	private String serverPort;
 	
