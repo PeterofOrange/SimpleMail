@@ -130,6 +130,8 @@ public class MainFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				mfm.exit();
+				System.exit(0);
+				
 			}
 		});
 
