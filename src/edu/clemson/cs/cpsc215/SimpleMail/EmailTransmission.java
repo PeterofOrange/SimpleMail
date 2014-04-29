@@ -7,7 +7,6 @@ package edu.clemson.cs.cpsc215.SimpleMail;
 import java.util.ArrayList;
 import java.util.Properties;
 
-import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -216,9 +215,9 @@ public class EmailTransmission {
 			Configuration config = DataStore.getDataStore().getConfig();
 			String username = config.getEmail();
 			String password = config.getPassword();
-
 			authentication = new PasswordAuthentication(username, password);
 		}
+		
 		protected PasswordAuthentication getPasswordAuthentication() {
 			return authentication;
 		}

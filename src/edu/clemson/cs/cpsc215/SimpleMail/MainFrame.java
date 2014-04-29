@@ -63,7 +63,7 @@ public class MainFrame extends JFrame {
 		table.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e)
 			{
-				//System.out.println("got mouse click:" + e.getClickCount());
+				//only consume double-clicks to compose new mail
 				if (e.getClickCount() == 2 && !e.isConsumed()) {
 					e.consume();
 					int loc = table.getSelectedRow();

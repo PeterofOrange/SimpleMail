@@ -44,6 +44,7 @@ public class ContactEditingDlg extends JDialog {
 		phoneText.setText(con.getPhone());
 		emailText.setText(con.getEmail());
 		this.pack();
+		this.setTitle("Add or Edit a Contact");
 		this.setVisible(true);
 	}
 
@@ -68,7 +69,8 @@ public class ContactEditingDlg extends JDialog {
 			phoneText.setText(con.getPhone());
 			emailText.setText(con.getEmail());
 		}
-
+		
+		this.setTitle("Add or Edit a Contact");
 		this.setVisible(true);
 	}
 
@@ -177,7 +179,6 @@ public class ContactEditingDlg extends JDialog {
 			}
 			DataStore.getDataStore().saveContacts();
 			// TODO: move to exit functions
-
 			dispose();
 
 		}

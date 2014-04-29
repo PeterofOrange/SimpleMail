@@ -51,6 +51,7 @@ public class ConfigurationDlg extends JDialog {
 				.getServerPort());
 
 		this.setModalityType(DEFAULT_MODALITY_TYPE);
+		this.setTitle("Edit Configuration");
 		this.setVisible(true);
 	}
 
