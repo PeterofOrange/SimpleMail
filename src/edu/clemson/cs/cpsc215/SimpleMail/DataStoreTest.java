@@ -7,17 +7,19 @@ import org.junit.Test;
 
 public class DataStoreTest {
 	private DataStore singleton;
+	private Configuration config;
 
 	@Before
 	public void setUp() throws Exception {
 		singleton = DataStore.getDataStore();
-		
+		config = singleton.getConfig();
 	}
 
 	@Test
-	public void testGetDataStore() {
-		assert();
+	public void testDataStore() {
+		assert(singleton.getConfig());
 		assertEquals(singleton, DataStore.getDataStore());
+		assert
 	}
 
 	@Test

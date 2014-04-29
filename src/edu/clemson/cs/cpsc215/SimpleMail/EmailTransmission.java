@@ -6,6 +6,8 @@ package edu.clemson.cs.cpsc215.SimpleMail;
 
 import java.util.ArrayList;
 import java.util.Properties;
+
+import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -35,8 +37,8 @@ public class EmailTransmission {
 		Configuration config = DataStore.getDataStore().getConfig();
 		String serv = config.getServerAddr();
 		String fromAddr = config.getEmail();
-		//String uname = config.getEmail();
-		//String passwd = config.getPassword();
+		String uname = config.getEmail();
+		String passwd = config.getPassword();
 
 		if (serv == null || serv == "") {
 			errorButton("Cannot send email: No SMTP server set.");
@@ -47,11 +49,23 @@ public class EmailTransmission {
 		}
 
 		Properties props = new Properties();
-		props.put("mail.smtp.host", serv);
+		props.put("mail.smtp.host", serv);System.out.println("Server is " + serv);
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.transport.protocol", "smtp");
-		props.put("mail.smtp.port", config.getServerPort());
-		Authenticator auth = new Authenticator();
+		props.put("mail.smtp.socketFactory.Port", config.getServerPort());
+		props.put("mail.smtp.socketFactory.class",
+				"javax.net.ssl.SSLSocketFactory");
+		final String username = uname;
+		final String password = passwd;
+
+		
+		Authenticator auth = new Authenticator() {
+			//Define anonymized function
+			//returns a PasswordAuthentication Object
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(username, password);
+			}
+		};
 
 		//Session ses = Session.getDefaultInstance(props, null);
 		Session ses = Session.getDefaultInstance(props, auth);
@@ -205,20 +219,5 @@ public class EmailTransmission {
 	 */
 	public void errorButton(String s) {
 		System.out.println(s);
-	}
-
-
-	private class Authenticator extends javax.mail.Authenticator {
-		private PasswordAuthentication authentication;
-		public Authenticator() {
-			Configuration config = DataStore.getDataStore().getConfig();
-			String username = config.getEmail();
-			String password = config.getPassword();
-			authentication = new PasswordAuthentication(username, password);
-		}
-		
-		protected PasswordAuthentication getPasswordAuthentication() {
-			return authentication;
-		}
 	}
 }
