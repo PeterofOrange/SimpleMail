@@ -6,7 +6,6 @@ package edu.clemson.cs.cpsc215.SimpleMail;
 
 import java.util.ArrayList;
 import java.util.Properties;
-
 import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;

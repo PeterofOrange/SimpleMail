@@ -5,16 +5,37 @@
 package edu.clemson.cs.cpsc215.SimpleMail;
 
 import java.io.Serializable;
+import java.security.*;
+import javax.crypto.*;
+import javax.crypto.spec.PBEKeySpec;
+import javax.crypto.spec.SecretKeySpec;
 
 public class Configuration implements Serializable {
 
 	private static final long serialVersionUID = -3397949010748837896L;
 	private String senderEmail;
 	private String senderPassword;
+	private byte[] senderPasswordCrypt;
 	private String serverAddr;
 	private String serverPort;
 	
-
+	
+	/*byte[] salt = "choose a better salt".getBytes();
+	int iterations = 10000;
+	String passphrase = "hi";
+	
+	SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+	SecretKey tmp = factory.generateSecret(new PBEKeySpec(passphrase.toCharArray(), salt, iterations, 128));
+	SecretKeySpec key = new SecretKeySpec(tmp.getEncoded(), "AES");
+	
+	Cipher aes = Cipher.getInstance("AES/ECB/PKCS5Padding");
+	
+	aes.init(Cipher.ENCRYPT_MODE, key);
+	byte[] ciphertext = aes.doFinal("my cleartext".getBytes());
+	aes.init(Cipher.DECRYPT_MODE, key);
+	String cleartext = new String(aes.doFinal(ciphertext));
+	*/
+	
 	/**
 	 * Gets the email address for a Configuration
 	 * 

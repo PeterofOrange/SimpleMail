@@ -12,11 +12,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
-import java.util.Vector;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -24,7 +21,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.table.TableColumnModel;
 
 public class MainFrame extends JFrame {
 
@@ -35,6 +31,7 @@ public class MainFrame extends JFrame {
 	private JMenuItem exit, compose, configure, about;
 	private JPanel base, layer;
 	private JButton add, edit, delete;
+	private MainFrameMediator mfm;
 
 	/**
 	 * constructs a mainframe object
@@ -44,6 +41,7 @@ public class MainFrame extends JFrame {
 	public MainFrame(String title) {
 		super(title);
 		super.setSize(800, 400);
+		mfm = new MainFrameMediator();
 		setupForm();
 		addListeners();
 	}
@@ -53,10 +51,7 @@ public class MainFrame extends JFrame {
 	 */
 	private void setupForm() {
 		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);	
-		
-		table = new JTable(DataStore.getDataStore());
-		System.out.println(table.getColumnName(0));
-		
+		table = new JTable(DataStore.getDataStore());	
 		file = new JMenu("File");
 		system = new JMenuBar();
 		file.add(exit = new JMenuItem("Exit"));
@@ -92,26 +87,22 @@ public class MainFrame extends JFrame {
 	private void addListeners() {
 		table.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				// only consume double-clicks to compose new mail
-				if (e.getClickCount() == 2 && !e.isConsumed()) {
-					e.consume();
-					int loc = table.getSelectedRow();
-					EmailTransmissionDlg newMail = new EmailTransmissionDlg(loc);
-				}
+				int loc = table.getSelectedRow();
+				mfm.table(e, loc);
 			}
 		});
 
 		add.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ContactEditingDlg newContact = new ContactEditingDlg(-1);
+				mfm.add();
 			}
 		});
 
 		compose.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				EmailTransmissionDlg newMail = new EmailTransmissionDlg(-1);
+				mfm.compose();
 			}
 		});
 
@@ -119,7 +110,7 @@ public class MainFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int loc = table.getSelectedRow();
-				ContactEditingDlg editContact = new ContactEditingDlg(loc);
+				mfm.edit(loc);
 			}
 
 		});
@@ -127,58 +118,37 @@ public class MainFrame extends JFrame {
 		configure.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ConfigurationDlg editConfig = new ConfigurationDlg();
+				mfm.configure();
 			}
 		});
 
 		exit.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				dispose();
+				mfm.exit();
 			}
 		});
 
 		about.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				SystemInformationDlg info = new SystemInformationDlg();
+				mfm.about();
 			}
 		});
 
 		delete.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ArrayList<Contact> contacts = DataStore.getDataStore()
-						.getContactList();
-				Contact contact = new Contact();
-				if (contacts.size() > 0) {
-					contact = (Contact) contacts.get(table.getSelectedRow());
-				}
-
-				int selected = JOptionPane.showOptionDialog(null,
-						"Are you sure want to delete " + contact.getName()
-								+ "?", "Confirm contact deletion",
-						JOptionPane.YES_NO_OPTION,
-						JOptionPane.QUESTION_MESSAGE, null, null, null);
-				if (selected == 0) {
-					contacts.remove(table.getSelectedRow());
-					DataStore.getDataStore().setContactList(contacts);
-					DataStore.getDataStore().fireTableRowsInserted(0,
-							DataStore.getDataStore().getRowCount());
-				}
+				int row = table.getSelectedRow();
+				mfm.delete(row);
 			}
 		});
-
-		this.addWindowListener(new WindowAdapter() {
+				
+			
+			this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent evt) {
-				int close = JOptionPane.showOptionDialog(null,
-						"Are you sure you want to close the application?",
-						"Exit?", JOptionPane.YES_NO_OPTION,
-						JOptionPane.QUESTION_MESSAGE, null, null, null);
-				if (close == 0) {
-					DataStore.getDataStore().saveData();
-					dispose();
-				}
+				mfm.close();
+				dispose();
 			}
 		});
 	}
