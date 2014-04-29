@@ -11,7 +11,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -23,9 +22,6 @@ import javax.swing.JTextField;
 
 public class EmailTransmissionDlg extends JDialog {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private GridBagConstraints constraints;
 	private JLabel fromLabel, toLabel, ccLabel, bccLabel, subjLabel, msgLabel;
@@ -34,6 +30,14 @@ public class EmailTransmissionDlg extends JDialog {
 	private JScrollPane msgScroll;
 	private JButton sendButton, cancelButton;
 
+	/**
+	 * Creates a new EmailTransmissionDlg frame
+	 * 
+	 * @param main
+	 *            the parent frame for this
+	 * @param con
+	 *            the Contact to fill the text fields with
+	 */
 	public EmailTransmissionDlg(Frame main, Contact con) {
 		super(main, "Send Email");
 		setLayout(new GridBagLayout());
@@ -42,7 +46,6 @@ public class EmailTransmissionDlg extends JDialog {
 		constraints.insets = new Insets(5, 5, 5, 5);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setupMenu();
 		setupForm();
 		toText.setText(con.getEmail());
 		this.pack();
@@ -54,20 +57,19 @@ public class EmailTransmissionDlg extends JDialog {
 	/**
 	 * Constructs an EmailTransmissionDlg with contact at index
 	 * 
-	 * @param index the index of the content fill the form with
+	 * @param index
+	 *            the index of the content fill the form with
 	 */
 	public EmailTransmissionDlg(int index) {
-		// super(main, "Send Email");
 		setLayout(new GridBagLayout());
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.WEST;
 		constraints.insets = new Insets(6, 6, 6, 6);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setupMenu();
 		setupForm();
 		this.pack();
-		
+
 		Contact con = new Contact();
 		if (index != -1) {
 			con = DataStore.getDataStore().getContactList().get(index);
@@ -77,13 +79,7 @@ public class EmailTransmissionDlg extends JDialog {
 		this.setVisible(true);
 	}
 
-	private void setupMenu() {
-		// TODO Auto-generated method stub
-
-	}
-
 	private void setupForm() {
-
 		fromLabel = new JLabel("From: ");
 		constraints.gridx = 0;
 		constraints.gridy = 0;
@@ -176,34 +172,32 @@ public class EmailTransmissionDlg extends JDialog {
 		EmailTransmission letter = new EmailTransmission();
 		String delims = "[, ]+";
 		String[] addresses = toText.getText().split(delims);
-		
-		
-		for(int c = 0; c < addresses.length; c++) {
+
+		for (int c = 0; c < addresses.length; c++) {
 			if (addresses[c].matches(".*@.*")) {
 				letter.addTo(addresses[c]);
-			}
-			else {
+			} else {
 				ErrorDlg.showError("Invalid Email: " + addresses[c]);
 				return;
 			}
-	}
-		
+		}
+
 		addresses = this.ccText.getText().split(delims);
-		for(int c = 0; c < addresses.length; c++)
+		for (int c = 0; c < addresses.length; c++)
 			letter.addCc(addresses[c]);
-		
+
 		addresses = this.bccText.getText().split(delims);
-		for(int c = 0; c < addresses.length; c++)
+		for (int c = 0; c < addresses.length; c++)
 			letter.addBcc(addresses[c]);
 
 		letter.setSubject(this.subjText.getText());
 		letter.setMessage(this.msgText.getText());
 
 		try {
-			letter.sendEmail();// (to, cc, bcc, subject, body);
+			letter.sendEmail();
 			JOptionPane.showMessageDialog(this, "Email sent!");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			ErrorDlg.showError("Error: Could not send email: " + e.getMessage());
 			e.printStackTrace();
 		} finally {
 		}

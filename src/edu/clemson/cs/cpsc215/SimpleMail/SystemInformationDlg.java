@@ -21,6 +21,14 @@ public class SystemInformationDlg extends JDialog {
 	 * constructs a SystemInfromationDlg object
 	 */
 	public SystemInformationDlg() {
+		setupFrame();
+
+	}
+	
+	/**
+	 * sets up the frame for the SystemInformationDlg JDialog
+	 */
+	public void setupFrame() {
 		this.setModalityType(DEFAULT_MODALITY_TYPE);
 		this.setTitle("About SimpleMail");
 		setLayout(new BorderLayout());

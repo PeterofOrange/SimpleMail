@@ -120,5 +120,4 @@ public class Contact implements Serializable {
 	public Contact() {
 		super();
 	}
-
 }

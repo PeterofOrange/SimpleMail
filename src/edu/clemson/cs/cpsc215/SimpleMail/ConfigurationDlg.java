@@ -33,7 +33,6 @@ public class ConfigurationDlg extends JDialog {
 	 * Constructs a new ConfigurationDlg
 	 */
 	public ConfigurationDlg() {
-		// super(main, "Add or Edit a Contact");
 		setLayout(new GridBagLayout());
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.WEST;
