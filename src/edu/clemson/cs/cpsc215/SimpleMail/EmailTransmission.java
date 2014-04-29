@@ -51,6 +51,7 @@ public class EmailTransmission {
 		Properties props = new Properties();
 		props.put("mail.smtp.host", serv);
 		props.put("mail.smtp.auth", "true");
+		props.put("mail.transport.protocol", "smtp");
 		props.put("mail.smtp.port", config.getServerPort());
 		Authenticator auth = new Authenticator();
 
@@ -62,7 +63,7 @@ public class EmailTransmission {
 			for (int c = 0; c < to.size(); c++) {
 				if(!to.get(c).equals("")){
 					msg.addRecipient(RecipientType.TO,
-							new InternetAddress(to.get(c)));
+						new InternetAddress(to.get(c)));
 					//System.out.println(cc.get(c));
 				}
 			}
