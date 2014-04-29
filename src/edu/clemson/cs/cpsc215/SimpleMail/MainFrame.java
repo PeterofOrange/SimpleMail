@@ -12,8 +12,11 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.Vector;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -21,6 +24,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.TableColumnModel;
 
 public class MainFrame extends JFrame {
 
@@ -48,8 +52,11 @@ public class MainFrame extends JFrame {
 	 * sets up the form for the MainFrame JFrame
 	 */
 	private void setupForm() {
-		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);	
+		
 		table = new JTable(DataStore.getDataStore());
+		System.out.println(table.getColumnName(0));
+		
 		file = new JMenu("File");
 		system = new JMenuBar();
 		file.add(exit = new JMenuItem("Exit"));

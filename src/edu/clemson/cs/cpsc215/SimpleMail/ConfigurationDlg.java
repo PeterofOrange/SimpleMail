@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 public class ConfigurationDlg extends JDialog {
@@ -25,8 +26,9 @@ public class ConfigurationDlg extends JDialog {
 	private GridBagConstraints constraints;
 	private JLabel emailAddrLabel, emailPasswordLabel, serverAddrLabel,
 			serverPortLabel;
-	private JTextField emailAddrText, emailPasswordText, serverAddrText,
+	private JTextField emailAddrText, serverAddrText,
 			serverPortText;
+	private JPasswordField emailPasswordText;
 	private JButton saveButton, cancelButton;
 
 	/**
@@ -71,7 +73,7 @@ public class ConfigurationDlg extends JDialog {
 		constraints.gridx = 0;
 		constraints.gridy = 1;
 		this.add(emailPasswordLabel, constraints);
-		emailPasswordText = new JTextField(30);
+		emailPasswordText = new JPasswordField(30);
 		constraints.gridx = 1;
 		constraints.fill = GridBagConstraints.HORIZONTAL;
 		this.add(emailPasswordText, constraints);

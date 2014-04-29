@@ -20,6 +20,7 @@ public class DataStore extends AbstractTableModel {
 	private static final DataStore toSelf = new DataStore();
 	private ArrayList<Contact> contacts = new ArrayList<Contact>();
 	private Configuration config = new Configuration();
+	private String[] columnNames = {"Name", "Email" ,"Phone Number", "Postal Address" };
 
 	private DataStore() {
 		loadData();
@@ -219,6 +220,15 @@ public class DataStore extends AbstractTableModel {
 		return contacts.size();
 	}
 
+
+	/**
+	 * Returns the name of a given column by index
+	 * 
+	 * @return	String		the column name
+	 */
+	public String getColumnName(int column) {
+	    return columnNames[column];
+	}
 	/**
 	 * Returns element of person from contact list Second argument: 0: Name 1:
 	 * Postal Address 2: Phone Number 3: E-mail address
@@ -237,13 +247,13 @@ public class DataStore extends AbstractTableModel {
 			ret = contacts.get(arg0).getName();
 			break;
 		case 1:
-			ret = contacts.get(arg0).getPost();
+			ret = contacts.get(arg0).getEmail();
 			break;
 		case 2:
 			ret = contacts.get(arg0).getPhone();
 			break;
 		case 3:
-			ret = contacts.get(arg0).getEmail();
+			ret = contacts.get(arg0).getPost();
 			break;
 		}
 		return ret;
