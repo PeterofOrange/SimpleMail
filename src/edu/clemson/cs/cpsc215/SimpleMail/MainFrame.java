@@ -68,6 +68,8 @@ public class MainFrame extends JFrame {
 		add = new JButton("Add");
 		edit = new JButton("Edit");
 		delete = new JButton("Delete");
+		edit.setVisible(false);
+		delete.setVisible(false);
 
 		system.add(file);
 		system.add(config);
@@ -88,6 +90,10 @@ public class MainFrame extends JFrame {
 		table.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				int loc = table.getSelectedRow();
+				if (loc != -1) {
+					edit.setVisible(true);
+					delete.setVisible(true);
+				}
 				mfm.table(e, loc);
 			}
 		});
