@@ -17,6 +17,6 @@ who did what:
     EmailTransmission.java: Peter, Parker
     ErrorDlg.java: Phillip, Parker
     MainFrame.java: Peter, Parker, Phillip
+    MainFrmeMediator.java: Parker
     SmtpAuthenticator.java: Peter
     SystemInformationDlg.java: Phillip, Parker
-    UnitTests.java: Peter

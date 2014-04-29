@@ -5,7 +5,6 @@
 package edu.clemson.cs.cpsc215.SimpleMail;
 
 import java.awt.Font;
-import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -26,24 +25,12 @@ public class ContactEditingDlg extends JDialog {
 	private JButton saveButton, cancelButton;
 	private Contact con;
 
-	public ContactEditingDlg(Frame main, Contact con) {
-		super(main, "Add or Edit a Contact");
-		setLayout(new GridBagLayout());
-		constraints = new GridBagConstraints();
-		constraints.anchor = GridBagConstraints.WEST;
-		constraints.insets = new Insets(5, 5, 5, 5);
-		setLocationRelativeTo(null);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setupForm();
-		nameText.setText(con.getName());
-		postText.setText(con.getPost());
-		phoneText.setText(con.getPhone());
-		emailText.setText(con.getEmail());
-		this.pack();
-		this.setTitle("Add or Edit a Contact");
-		this.setVisible(true);
-	}
-
+	/**
+	 * Constructs a ContactEditingDlg
+	 * 
+	 * @param contactIndex
+	 *            the index of the contact to insert data for
+	 */
 	public ContactEditingDlg(int contactIndex) {
 		setLayout(new GridBagLayout());
 		constraints = new GridBagConstraints();
@@ -66,7 +53,10 @@ public class ContactEditingDlg extends JDialog {
 		this.setTitle("Add or Edit a Contact");
 		this.setVisible(true);
 	}
-	
+
+	/**
+	 * sets up the form for a ContactEditingDlg
+	 */
 	private void setupForm() {
 		nameLabel = new JLabel("Name: ");
 		constraints.gridx = 0;

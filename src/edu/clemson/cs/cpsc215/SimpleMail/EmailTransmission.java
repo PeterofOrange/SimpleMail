@@ -40,10 +40,10 @@ public class EmailTransmission {
 		String passwd = config.getPassword();
 
 		if (serv == null || serv == "") {
-			errorButton("Cannot send email: No SMTP server set.");
+			ErrorDlg.showError("Cannot send email: No SMTP server set");
 			return;
 		} else if (fromAddr == null || fromAddr == "") {
-			errorButton("Cannot send email: Email address (from) not set.");
+			ErrorDlg.showError("Cannot send email: Email address (from) not set.");
 			return;
 		}
 
@@ -93,9 +93,9 @@ public class EmailTransmission {
 			msg.setFrom(new InternetAddress(uname));
 			Transport.send(msg);
 		} catch (AddressException e) {
-			errorButton("Error: invalid Address.");
+			ErrorDlg.showError("Error: Invalid Address.");
 		} catch (MessagingException e) {
-			errorButton("Error: could not send message.");
+			ErrorDlg.showError("Error: Could not send Message: " + e.getMessage());
 		}
 
 	}
@@ -210,7 +210,4 @@ public class EmailTransmission {
 	 * @param s
 	 *            the string to display in the error message
 	 */
-	public void errorButton(String s) {
-		System.out.println(s);
-	}
 }

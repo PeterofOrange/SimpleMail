@@ -19,15 +19,11 @@ import javax.swing.JTextField;
 
 public class ConfigurationDlg extends JDialog {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private GridBagConstraints constraints;
 	private JLabel emailAddrLabel, emailPasswordLabel, serverAddrLabel,
 			serverPortLabel;
-	private JTextField emailAddrText, serverAddrText,
-			serverPortText;
+	private JTextField emailAddrText, serverAddrText, serverPortText;
 	private JPasswordField emailPasswordText;
 	private JButton saveButton, cancelButton;
 
@@ -128,8 +124,7 @@ public class ConfigurationDlg extends JDialog {
 					DataStore.getDataStore().getConfig()
 							.setEmail(emailAddrText.getText());
 					String tmp = emailPasswordText.getPassword().toString();
-					DataStore.getDataStore().getConfig()
-							.setPassword(tmp);
+					DataStore.getDataStore().getConfig().setPassword(tmp);
 					DataStore.getDataStore().getConfig()
 							.setServerAddr(serverAddrText.getText());
 					DataStore.getDataStore().getConfig()

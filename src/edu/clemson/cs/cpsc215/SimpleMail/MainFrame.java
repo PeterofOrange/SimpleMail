@@ -158,4 +158,11 @@ public class MainFrame extends JFrame {
 			}
 		});
 	}
+	
+	public static void main(String [] args) {
+		
+		MainFrame test = new MainFrame("SimpleMail");
+		test.setVisible(true);
+	}
+
 }
